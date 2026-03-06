@@ -49,7 +49,7 @@ h2 {
 .controls {
   position: sticky;
   top: 0;
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
   padding: 12px 14px;
   border: 1px solid var(--border);
@@ -93,7 +93,9 @@ button:hover {
 }
 
 .options label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 6px 0;
   padding: 8px 10px;
   border-radius: 10px;
@@ -106,7 +108,15 @@ button:hover {
   border-color: var(--border);
 }
 
-.options label:has(input:checked) {
+.options input {
+  accent-color: var(--primary);
+}
+
+.options input:checked + span {
+  font-weight: 600;
+}
+
+.options label.selected {
   background: #ecf3ff;
   border-color: #b8cef8;
 }
@@ -185,10 +195,20 @@ questions.forEach((q, i) => {
   div.innerHTML = `
     <div class="question-title">${i+1}. ${q}</div>
     <div class="options">
-      ${options.map(o => `<label><input type="radio" name="q${i}" value="${o.value}"> ${o.label}</label>`).join("")}
+      ${options.map(o => `<label><input type="radio" name="q${i}" value="${o.value}"><span>${o.label}</span></label>`).join("")}
     </div>
   `;
   quizDiv.appendChild(div);
+});
+
+
+quizDiv.addEventListener("change", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLInputElement) || target.type !== "radio") return;
+  const name = target.name;
+  document.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
+    radio.closest("label")?.classList.toggle("selected", radio.checked);
+  });
 });
 
 function gatherResponses() {
@@ -349,6 +369,7 @@ function exportResults() {
 
 function clearAllAnswers() {
   document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+  document.querySelectorAll(".options label.selected").forEach(el => el.classList.remove("selected"));
   document.getElementById("results").style.display = "none";
 }
 </script>
