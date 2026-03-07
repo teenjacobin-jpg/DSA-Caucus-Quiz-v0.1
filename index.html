@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,323 +7,84 @@
 <style>
 :root {
   color-scheme: light;
-  --bg: #f4f7fb;
-  --surface: #ffffff;
-  --surface-soft: #f8fbff;
-  --border: #d8e2f0;
-  --text: #1e2430;
-  --muted: #5d687a;
-  --primary: #295ec7;
-  --primary-soft: #e9f0ff;
+  --bg: #f6f1f1;
+  --surface: #fffdfd;
+  --surface-soft: #f9ecec;
+  --border: #e2c9c9;
+  --text: #2a1f1f;
+  --muted: #6b5252;
+  --primary: #b3262d;
+  --primary-strong: #8f1e25;
+  --primary-soft: #f7d9db;
+  --accent: #ce575f;
 }
-
-body {
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  max-width: 980px;
-  margin: auto;
-  padding: 24px;
-  line-height: 1.45;
-  color: var(--text);
-  background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 60%);
-}
-h1 {
-  margin-bottom: 0.4rem;
-  font-size: clamp(1.8rem, 2vw + 1.3rem, 2.5rem);
-}
-
-h2 {
-  margin-bottom: 0.4rem;
-}
-
-.disclosure {
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin: 18px 0 24px;
-  box-shadow: 0 6px 16px rgba(26, 45, 82, 0.06);
-}
-
-.controls {
-  position: sticky;
-  top: 0;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 16px;
-  z-index: 3;
-  box-shadow: 0 8px 18px rgba(26, 45, 82, 0.08);
-}
-
-button {
-  border: 1px solid var(--primary);
-  background: var(--primary-soft);
-  color: #11377f;
-  border-radius: 999px;
-  font-weight: 600;
-  padding: 9px 15px;
-  margin-right: 10px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-}
-
-button:hover {
-  background: #dfe9ff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(41, 94, 199, 0.2);
-}
-
-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.question {
-  margin-bottom: 14px;
-  padding: 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(26, 45, 82, 0.04);
-}
-
-.question-title {
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.options label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 6px 0;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.options label:hover {
-  background: var(--surface-soft);
-  border-color: var(--border);
-}
-
-.options input {
-  accent-color: var(--primary);
-}
-
-.options input:checked + span {
-  font-weight: 600;
-}
-
-.options label.selected {
-  background: #ecf3ff;
-  border-color: #b8cef8;
-}
-
-.result-box {
-  margin-top: 24px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  box-shadow: 0 10px 22px rgba(26, 45, 82, 0.09);
-}
-
-.small {
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  background: #f6f9ff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px;
-}
-
-details {
-  margin-top: 10px;
-}
-
-summary {
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.controls-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.share-feedback {
-  margin-top: 4px;
-  min-height: 1.2em;
-}
-
-.progress-wrap {
-  margin: 8px 0 6px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: #eef3fb;
-  overflow: hidden;
-}
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #4c78d9, #295ec7);
-  transition: width 0.2s ease;
-}
-
-.match-list {
-  margin: 10px 0 14px;
-  display: grid;
-  gap: 8px;
-}
-
-.match-item {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 10px;
-  background: #f8fbff;
-}
-
-.match-item-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.match-item-bar {
-  margin-top: 6px;
-  height: 7px;
-  border-radius: 999px;
-  background: #e6edf9;
-  overflow: hidden;
-}
-
-.match-item-bar span {
-  display: block;
-  height: 100%;
-  background: #3568cd;
-}
-
-.result-card {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-left: 5px solid var(--primary);
-  border-radius: 10px;
-  background: #f8fbff;
-}
-
-.result-card-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.result-card-logo {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-  border-radius: 6px;
-  background: #fff;
-  border: 1px solid var(--border);
-}
+* { box-sizing: border-box; }
+body { font-family: "Inter", "Segoe UI", Arial, sans-serif; max-width: 760px; margin: auto; padding: 16px 16px 120px; line-height: 1.45; color: var(--text); background: radial-gradient(circle at top, #fff 0%, var(--bg) 65%); }
+h1 { margin: 0 0 0.35rem; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+h2 { margin: 0 0 0.5rem; }
+.small { color: var(--muted); font-size: 0.92rem; }
+a { color: var(--primary-strong); }
+.disclosure { background: var(--surface-soft); border: 1px solid var(--border); border-left: 5px solid var(--primary); border-radius: 12px; padding: 12px 14px; margin: 14px 0 16px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 6px 18px rgba(96, 28, 32, 0.08); }
+.progress-wrap { margin: 10px 0 6px; }
+.progress-bar { width: 100%; height: 10px; border-radius: 999px; border: 1px solid var(--border); background: #f2dddd; overflow: hidden; }
+.progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 0.2s ease; }
+.question-title { font-weight: 700; font-size: 1.08rem; margin: 8px 0 10px; }
+.option-btn { width: 100%; text-align: left; border: 1px solid #d9a9ad; background: #fff; color: var(--text); border-radius: 12px; font-weight: 600; padding: 14px 12px; margin: 0 0 9px; cursor: pointer; }
+.option-btn.selected { border-color: var(--primary); background: var(--primary-soft); box-shadow: 0 0 0 2px rgba(179, 38, 45, 0.15) inset; }
+.option-btn:hover { background: #fff7f7; }
+.nav-footer { position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid var(--border); background: rgba(255, 253, 253, 0.97); backdrop-filter: blur(4px); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); z-index: 10; }
+.nav-row { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; }
+button { border: 1px solid var(--primary); background: var(--primary-soft); color: #65161b; border-radius: 999px; font-weight: 700; padding: 10px 14px; cursor: pointer; }
+button.primary { background: var(--primary); color: #fff; border-color: var(--primary-strong); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.review-item { display: flex; justify-content: space-between; gap: 8px; border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin: 8px 0; background: #fff7f7; }
+.result-grid { display: grid; gap: 10px; }
+.result-card { border: 1px solid var(--border); border-left: 6px solid var(--primary); border-radius: 12px; background: #fff7f7; padding: 10px; }
+.result-card-head { display: flex; gap: 10px; align-items: center; }
+.result-card-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 7px; background: #fff; border: 1px solid var(--border); }
+pre { white-space: pre-wrap; word-break: break-word; background: #fff6f6; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
 </style>
 </head>
 <body>
 <h1>DSA Tendency Quiz Demo</h1>
-
-<div class="disclosure">
-<strong>Disclosure:</strong> Political tendencies are formed out of shared analysis of shared experience.
+<div class="disclosure"><strong>Disclosure:</strong> Political tendencies are formed out of shared analysis of shared experience.
 Your results on this quiz should not affect your political identity. Rather, the following questions
-should inform your way of assessing the different tendencies in DSA.
-</div>
+should inform your way of assessing the different tendencies in DSA.</div>
+<p class="small"><strong>Latest update check:</strong> This build includes the Lockerite description refresh, Carnation bridge weighting adjustment, and safe shared-results links that do not expose raw answers.</p>
 
-<p class="small" style="margin-top:-8px; margin-bottom:14px;">
-<strong>Latest update check:</strong> This build includes the Lockerite description refresh, Carnation bridge weighting adjustment, and safe shared-results links that do not expose raw answers.
-</p>
+<div id="quiz" class="panel"></div>
+<div id="results" class="panel" style="display:none; margin-top: 12px;"></div>
 
-<div class="controls">
-  <div class="controls-actions">
-    <button id="seeResultsBtn" onclick="calculateResults()">See Results</button>
-    <button onclick="shareResults()">Share Results</button>
-    <button onclick="exportResults()">Export Responses + Results</button>
-    <button onclick="jumpToFirstUnanswered()">Jump to First Unanswered</button>
-    <button onclick="clearAllAnswers()">Clear All</button>
-  </div>
-  <div id="shareFeedback" class="small share-feedback" aria-live="polite"></div>
-  <div class="progress-wrap">
-    <div id="progressText" class="small" aria-live="polite">Answered 0/0 questions (0%).</div>
-    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Quiz completion"><div id="progressFill" class="progress-fill"></div></div>
+<div class="nav-footer">
+  <div class="nav-row">
+    <button id="backBtn" type="button">Back</button>
+    <button id="nextBtn" class="primary" type="button">Next</button>
+    <div class="small" id="footerProgress" style="grid-column:1 / -1; text-align:center;"></div>
   </div>
 </div>
-
-<div id="quiz"></div>
-<div id="results" class="result-box" style="display:none;"></div>
 
 <script>
 const DATA = {"questions": ["The best way to build socialist power is by organizing workers on the job.", "Socialists should encourage members to work in industries where unions can have major power.", "Changing unions from the bottom up is more important than building relationships with union leaders.", "Winning stronger labor laws through elections is just as important as organizing workers directly on the job.", "Unions should play a central role in socialist political campaigns.", "Socialist election campaigns should grow out of strong organizing among workers, especially in unions and workplaces.", "The long-term success of socialist politics will depend more on rebuilding worker power than on electing more politicians.", "Socialists should focus more on organizing outside the workplace, like tenants or community campaigns.", "Electing more socialists to office is one of the most important ways to strengthen the socialist movement.", "Socialists should sometimes run campaigns mainly to organize people, even when victory is unlikely.", "Elected socialists should sometimes compromise to secure partial gains for working people.", "Winning elected office should not be the main measure of success for socialist campaigns.", "Socialists should prioritize building a bloc of elected officials who can govern together and pass a shared agenda.", "DSA should prioritize running more candidates for Congress and other federal offices so socialists can begin to exercise real national political power.", "Local socialist campaigns should mainly help build long-term national political power.", "Socialist organizations should focus on a small number of national campaign priorities so they can coordinate campaigns across the country.", "Socialist organizations should concentrate their resources on a few large national campaigns instead of many smaller struggles.", "Socialists should avoid high-profile races if those campaigns would distract from more winnable efforts that build lasting political power.", "A socialist organization should clearly explain what political changes it would make if working people took power.", "Socialist politics should mainly grow out of real struggles rather than from a detailed written program.", "A socialist organization should unite members around a shared political program.", "It is better for socialist organizations to stay politically flexible than to adopt a detailed program too early.", "The left should explain how the political system in the United States would need to change for working people to govern society.", "Socialists should connect everyday reforms like healthcare or wages to broader questions about who controls the economy.", "Socialists should focus more on organizing people around immediate demands than debating long-term political programs.", "A socialist organization should settle major political questions through debate before events force decisions.", "All dues-paying members should vote directly for national leadership.", "Leaders should be chosen through organized debate and collective decision-making, not mainly through mass online voting.", "A socialist organization needs clear leadership and strategy to be effective.", "It is better for an organization to be broad and loosely organized than politically disciplined.", "Organized tendencies and caucuses inside DSA are healthy and useful.", "A socialist organization should sometimes enforce collective decisions once they are democratically made.", "Political education should be a central part of socialist organizing.", "Practical organizing matters more than internal political debate.", "Socialists should focus on building large mass movements rather than relying mainly on politicians.", "Privately appealing to progressive politicians is not a substitute for independent organizing.", "Small groups taking dramatic action cannot replace organizing large numbers of ordinary people.", "Socialist organizations should focus on issues that affect the broadest part of the working class.", "Community organizing and mutual aid should be central parts of socialist work.", "Between periods of mass protest, socialists should focus on slow, local organizing that builds lasting relationships.", "It is usually better to keep a broad coalition together than to draw hard political lines too early.", "Political clarity is sometimes more important than keeping everyone in the same tent.", "DSA should treat anti-Zionism as a basic political requirement for endorsements and leadership at every level, not just one issue among many.", "DSA should focus first on demands around Palestine that are broad and winnable, even if they do not settle larger political disagreements.", "Maintaining trust with Palestinian-led and anti-Zionist movement groups is more important than winning elections.", "DSA should not allow the priorities of smaller issue organizations to determine its overall political direction.", "Anti-imperialism and anti-Zionism should shape DSA’s priorities across labor, electoral, and coalition work.", "The main responsibility of socialists in the United States is to oppose the actions of the U.S. government abroad.", "Socialists in the U.S. should openly criticize foreign governments when they attack workers or democratic movements, even if those governments claim to be socialist.", "Socialists should avoid aligning themselves with any group of powerful states in global conflicts.", "Socialists should focus more on solidarity with ordinary people and social movements abroad than with governments.", "People living under military occupation or colonial rule have the right to fight back with force.", "Socialists should avoid publicly condemning armed resistance movements fighting colonial rule.", "When the U.S. threatens another country, socialists here should focus first on opposing the U.S. response.", "Socialists should support liberation struggles even when they disagree with the politics of the groups leading them.", "A socialist movement needs a clear political program to guide its strategy, not just a collection of campaigns and movements.", "Expanding democratic political institutions is a central part of socialist strategy.", "The long-term goal of socialist organizing should be building a mass socialist political party.", "Socialist organizations should prioritize decentralized decision-making rather than concentrating authority in national leadership.", "Grassroots participation is more important than maintaining strict organizational discipline.", "Local chapters should have significant autonomy to pursue strategies suited to their own communities."], "profiles": {"Bread & Roses": {"labor_bnr": 2.0, "labor_groundwork": 0.2, "electoral_general": 0.5, "electoral_bnr": 1.8, "electoral_carnation": -0.4, "program_mug": 0.4, "program_flex": 1.0, "organization_broad": -0.2, "organization_discipline": 1.0, "movements_mass": 1.5, "palestine_redline": 0.8, "palestine_pragmatic": -0.2, "antiimperialism_general": 1.1, "critique_states": 1.8, "armed_resistance": 0.5, "mug_programmatic_politics": 0.6, "mug_democratic_institutions": 0.6, "mug_mass_party_building": 1.2, "lsc_local_chapter_autonomy": 0.6}, "Groundwork": {"labor_bnr": 0.3, "labor_groundwork": 1.9, "electoral_general": 1.6, "electoral_bnr": -0.3, "electoral_carnation": 1.0, "program_mug": 0.1, "program_flex": 0.2, "organization_broad": 1.4, "organization_discipline": 0.6, "movements_mass": 0.6, "palestine_redline": -0.4, "palestine_pragmatic": 1.0, "antiimperialism_general": 0.2, "critique_states": 0.8, "armed_resistance": -0.8, "mug_democratic_institutions": -1.0, "mug_mass_party_building": 1.2, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Marxist Unity Group": {"labor_bnr": 0.2, "labor_groundwork": -0.3, "electoral_general": -0.3, "electoral_bnr": 0.4, "electoral_carnation": -1.0, "program_mug": 2.0, "program_flex": -1.5, "organization_broad": -1.0, "organization_discipline": 1.8, "movements_mass": 0.3, "palestine_redline": 0.3, "palestine_pragmatic": -0.3, "antiimperialism_general": 0.8, "critique_states": 1.6, "armed_resistance": 0.8, "mug_programmatic_politics": 2.0, "mug_democratic_institutions": 2.0, "mug_mass_party_building": 2.0, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Reform & Revolution (Millnerite)": {"labor_bnr": 0.8, "labor_groundwork": -0.2, "electoral_general": -0.2, "electoral_bnr": 0.9, "electoral_carnation": -1.1, "program_mug": 1.3, "program_flex": -0.6, "organization_broad": -0.8, "organization_discipline": 1.6, "movements_mass": 0.7, "palestine_redline": 0.8, "palestine_pragmatic": -0.4, "antiimperialism_general": 1.8, "critique_states": 0.9, "armed_resistance": 1.1, "mug_programmatic_politics": 1.2, "mug_democratic_institutions": 1.2, "mug_mass_party_building": 2.0, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Reform & Revolution (Lockerite)": {"labor_bnr": 0.8, "labor_groundwork": -0.2, "electoral_general": -0.2, "electoral_bnr": 0.9, "electoral_carnation": -1.1, "program_mug": 1.3, "program_flex": -0.6, "organization_broad": -0.8, "organization_discipline": 1.6, "movements_mass": 0.5, "palestine_redline": 0.3, "palestine_pragmatic": -0.2, "antiimperialism_general": 0.8, "critique_states": 1.9, "armed_resistance": 0.4, "mug_programmatic_politics": 1.2, "mug_democratic_institutions": 1.2, "mug_mass_party_building": 2.0, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Red Star": {"labor_bnr": -0.1, "labor_groundwork": -0.4, "electoral_general": -0.8, "electoral_bnr": 0.0, "electoral_carnation": -1.6, "program_mug": 0.8, "program_flex": -0.4, "organization_broad": -1.3, "organization_discipline": 2.0, "movements_mass": 0.5, "palestine_redline": 1.4, "palestine_pragmatic": -1.3, "antiimperialism_general": 2.0, "critique_states": -1.3, "armed_resistance": 2.0, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Springs of Revolution": {"labor_bnr": -0.1, "labor_groundwork": -0.6, "electoral_general": -0.9, "electoral_bnr": 0.6, "electoral_carnation": -1.5, "program_mug": -0.5, "program_flex": 1.0, "organization_broad": 0.7, "organization_discipline": 0.2, "movements_mass": 1.8, "palestine_redline": 2.0, "palestine_pragmatic": -1.7, "antiimperialism_general": 1.7, "critique_states": 0.5, "armed_resistance": 1.2, "lsc_decentralized_decision_making": 0.6, "lsc_grassroots_over_discipline": 1.2, "lsc_local_chapter_autonomy": 1.2}, "Carnation": {"labor_bnr": -0.3, "labor_groundwork": 0.7, "electoral_general": 1.9, "electoral_bnr": -0.6, "electoral_carnation": 2.0, "program_mug": 0.4, "program_flex": 0.0, "organization_broad": 0.6, "organization_discipline": 0.5, "movements_mass": -0.1, "palestine_redline": -0.6, "palestine_pragmatic": 1.8, "antiimperialism_general": 0.1, "critique_states": 0.5, "armed_resistance": -0.8, "mug_programmatic_politics": 1.2, "mug_democratic_institutions": 0.6, "mug_mass_party_building": 0.6, "lsc_decentralized_decision_making": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Communist Caucus": {"labor_bnr": 0.1, "labor_groundwork": -0.6, "electoral_general": -0.8, "electoral_bnr": 0.2, "electoral_carnation": -1.4, "program_mug": -0.2, "program_flex": 1.0, "organization_broad": 0.5, "organization_discipline": 0.2, "movements_mass": 1.8, "palestine_redline": 0.5, "palestine_pragmatic": -0.2, "antiimperialism_general": 1.0, "critique_states": 0.8, "armed_resistance": 0.5, "lsc_grassroots_over_discipline": 0.6}, "Liberation": {"labor_bnr": -0.2, "labor_groundwork": -0.6, "electoral_general": -1.0, "electoral_bnr": -0.1, "electoral_carnation": -1.8, "program_mug": 0.7, "program_flex": -0.3, "organization_broad": -1.2, "organization_discipline": 1.9, "movements_mass": 0.6, "palestine_redline": 1.7, "palestine_pragmatic": -1.4, "antiimperialism_general": 2.0, "critique_states": -1.2, "armed_resistance": 1.9, "lsc_decentralized_decision_making": -1.0, "lsc_grassroots_over_discipline": -1.0, "lsc_local_chapter_autonomy": -1.0}, "Socialist Majority": {"labor_bnr": -0.6, "labor_groundwork": 0.6, "electoral_general": 2.0, "electoral_bnr": -1.2, "electoral_carnation": 1.0, "program_mug": -0.4, "program_flex": 0.3, "organization_broad": 1.2, "organization_discipline": -0.1, "movements_mass": -0.3, "palestine_redline": -0.8, "palestine_pragmatic": 1.5, "antiimperialism_general": -0.1, "critique_states": 0.4, "armed_resistance": -1.2, "mug_programmatic_politics": -1.0, "mug_democratic_institutions": -1.0}, "Emerge": {"labor_bnr": -0.1, "labor_groundwork": -0.3, "electoral_general": -0.5, "electoral_bnr": 0.3, "electoral_carnation": -0.9, "program_mug": -0.2, "program_flex": 1.1, "organization_broad": 1.3, "organization_discipline": 0.0, "movements_mass": 1.2, "palestine_redline": 0.9, "palestine_pragmatic": -0.6, "antiimperialism_general": 1.0, "critique_states": 0.4, "armed_resistance": 0.8, "mug_programmatic_politics": -1.0, "mug_mass_party_building": -1.0, "lsc_decentralized_decision_making": 1.2, "lsc_grassroots_over_discipline": 1.2, "lsc_local_chapter_autonomy": 1.2}, "Libertarian Socialist Caucus": {"labor_bnr": -0.6, "labor_groundwork": -1.0, "electoral_general": -1.5, "electoral_bnr": 0.2, "electoral_carnation": -2.0, "program_mug": -1.2, "program_flex": 1.7, "organization_broad": 2.0, "organization_discipline": -1.8, "movements_mass": 1.8, "palestine_redline": 0.4, "palestine_pragmatic": -0.2, "antiimperialism_general": 1.0, "critique_states": 1.3, "armed_resistance": 0.3, "mug_programmatic_politics": -1.0, "mug_democratic_institutions": -1.0, "mug_mass_party_building": -1.0, "lsc_decentralized_decision_making": 2.0, "lsc_grassroots_over_discipline": 2.0, "lsc_local_chapter_autonomy": 2.0}}, "cats": {"labor_bnr": [0, 1, 2, 5, 6], "labor_groundwork": [3, 4], "electoral_general": [8, 10, 12, 17], "electoral_bnr": [9, 11], "electoral_carnation": [13, 14, 15, 16], "program_mug": [18, 20, 22, 25], "program_flex": [19, 21, 24], "organization_broad": [26, 29, 40], "organization_discipline": [27, 28, 31, 33, 41], "movements_mass": [34, 35, 36, 37, 38, 39], "palestine_redline": [42, 44], "palestine_pragmatic": [43, 45], "antiimperialism_general": [46, 48, 52], "critique_states": [47, 49], "armed_resistance": [50, 51, 53, 54], "mug_programmatic_politics": [55], "mug_democratic_institutions": [56], "mug_mass_party_building": [57], "lsc_decentralized_decision_making": [58], "lsc_grassroots_over_discipline": [59], "lsc_local_chapter_autonomy": [60]}, "cat_weights": {"labor_bnr": 1.4, "labor_groundwork": 1.15, "electoral_general": 1.15, "electoral_bnr": 1.25, "electoral_carnation": 1.35, "program_mug": 1.2, "program_flex": 1.0, "organization_broad": 1.0, "organization_discipline": 1.0, "movements_mass": 1.15, "palestine_redline": 1.3, "palestine_pragmatic": 1.25, "antiimperialism_general": 1.15, "critique_states": 1.25, "armed_resistance": 1.1, "mug_programmatic_politics": 0.8, "mug_democratic_institutions": 0.8, "mug_mass_party_building": 0.8, "lsc_decentralized_decision_making": 0.8, "lsc_grassroots_over_discipline": 0.8, "lsc_local_chapter_autonomy": 0.8}};
+
 const questions = DATA.questions;
 const profiles = DATA.profiles;
 const cats = DATA.cats;
-const catWeights = DATA.cat_weights;
-
-questions[27] = "Leaders should be chosen through organized debate and collective decision-making, not mainly through mass online voting.";
-questions[44] = "Maintaining trust with Palestinian-led and anti-Zionist movement groups is more important than winning elections.";
-questions[54] = "Socialists should support liberation struggles even when they disagree with the politics of the groups leading them.";
-questions.push("Socialist organizations should try to keep harder-line socialist tendencies inside the coalition rather than pushing them out to maintain unity.");
-
-cats.coalition_harder_line_unity = [questions.length - 1];
-catWeights.coalition_harder_line_unity = 1.0;
-
-const coalitionUnityTargets = {
-  "Socialist Majority": 1.45,
-  "Bread & Roses": 1.55,
-  "Reform & Revolution": 1.35,
-  "Reform & Revolution (Millnerite)": 1.4,
-  "Reform & Revolution (Lockerite)": 1.35,
-  "Marxist Unity Group": 1.5,
-  "Red Star": 1.4,
-  "Liberation": 1.45,
-  "Communist Caucus": 1.4,
-  "Libertarian Socialist Caucus": 1.5,
-  "Emerge": 0.7,
-  "Springs of Revolution": 0.15,
-  "Groundwork": -1.2,
-  "Carnation": -1.0
+const catWeights = {
+  labor: 2,
+  electoral: 1.5,
+  strategy_program: 1.3,
+  organization: 1.3,
+  mass_work: 1.1,
+  zionism_discipline: 1.7,
+  anti_imperialism: 1.3,
+  critique_states: 1.2,
+  armed_resistance: 1.1,
+  coalition: 1.0,
+  leadership_structure: 1.0,
+  local_vs_national: 1.2
 };
-
-Object.entries(coalitionUnityTargets).forEach(([name, value]) => {
-  if (profiles[name]) {
-    Object.assign(profiles[name], {coalition_harder_line_unity: value});
-  }
-});
-
-// Calibrate key profile axes based on scoring feedback:
-// - Q10/Q12 (`electoral_bnr`): "Agree" trends toward Groundwork, "Disagree" toward Socialist Majority.
-// - Q34 (`organization_discipline`): "Agree" should also increase Socialist Majority alignment.
-if (profiles["Groundwork"]) profiles["Groundwork"].electoral_bnr = 1.0;
-if (profiles["Socialist Majority"]) profiles["Socialist Majority"].electoral_bnr = -1.0;
-if (profiles["Socialist Majority"]) profiles["Socialist Majority"].organization_discipline = 0.8;
-
 const resultMeta = {
   "Bread & Roses": {
     blurb: "Bread & Roses describes itself as “a national caucus of Marxist organizers in the Democratic Socialists of America” committed to building “an effective DSA rooted in the multiracial working class.” The caucus emphasizes mass politics, rebuilding a militant labor movement, and developing socialist leaders through workplace organizing, elections, and political education. Bread & Roses often argues that socialism will be built through a democratic mass movement capable of defeating the billionaire class and winning reforms like Medicare for All and a Green New Deal.",
@@ -432,376 +192,255 @@ const resultMeta = {
   }
 };
 
+
+Object.values(resultMeta).forEach((meta) => {
+  if (meta && typeof meta.color === 'string' && meta.color.startsWith('#')) {
+    meta.color = meta.color;
+  }
+});
+
+const shareSpreadsheetRows = {
+  "Bread & Roses": {handle: "@BreadRosesDSA", templates: []},
+  "Red Star": {handle: "@redstarcaucus", templates: []},
+  "Reform & Revolution": {handle: "@reformrevdsa", templates: []},
+  "Groundwork": {handle: "@groundworkdsa", templates: []},
+  "Class Unity": {handle: "@classunitydsa", templates: []},
+  "Afrosocialists": {handle: "@afrosocialists", templates: []},
+  "Socialist Majority": {handle: "@SocialistMaj", templates: []},
+  "Libertarian Socialist Caucus": {handle: "@DSA_LSC", templates: []},
+  "Emerge": {handle: "@emergedsa", templates: []},
+  "Communist Caucus": {handle: "@communistcaucus", templates: []},
+  "Marxist Unity Group": {handle: "@MUG_DSA", templates: []},
+  "Liberation": {handle: "@liberationdsa", templates: []},
+  "Springs of Revolution": {handle: "@SpringsofRev", templates: []},
+  "Carnation": {handle: "@CarnationDSA", templates: []},
+  "Independent DSA Member": {handle: "@DemSocialists", templates: []}
+};
+
 const options = [
-  {label:"Strongly Agree", value:2},
-  {label:"Agree", value:1},
-  {label:"Don't Know / Don't Care / Neutral", value:0},
+  {label:"Strongly Disagree", value:-2},
   {label:"Disagree", value:-1},
-  {label:"Strongly Disagree", value:-2}
+  {label:"Don't Know / Don't Care / Neutral", value:0},
+  {label:"Agree", value:1},
+  {label:"Strongly Agree", value:2}
 ];
+
+const STORAGE_KEY = "dsa_quiz_progress_v5";
+const MIN_REQUIRED = Math.ceil(questions.length * 0.6);
+const QUIZ_URL = window.location.origin ? window.location.href.split('?')[0] : "https://example.com/dsa-caucus-quiz/";
+const sections = Array.isArray(DATA.sections) ? DATA.sections : [];
 
 const quizDiv = document.getElementById("quiz");
 const resultsDiv = document.getElementById("results");
-const STORAGE_KEY = "dsa_quiz_responses_v4";
-const SHARED_RESULTS_PARAM = "sharedResults";
-const SHARE_VERSION = 1;
-const MIN_REQUIRED = Math.ceil(questions.length * 0.6);
-const seeResultsBtn = document.getElementById("seeResultsBtn");
-const progressBarEl = document.querySelector(".progress-bar");
-questions.forEach((q, i) => {
-  const div = document.createElement("div");
-  div.className = "question";
-  div.innerHTML = `
-    <div class="question-title">${i+1}. ${q}</div>
-    <div class="options">
-      ${options.map(o => `<label><input type="radio" name="q${i}" value="${o.value}"><span>${o.label}</span></label>`).join("")}
-    </div>
-  `;
-  quizDiv.appendChild(div);
-});
+const backBtn = document.getElementById("backBtn");
+const nextBtn = document.getElementById("nextBtn");
 
+let state = { currentQuestionIndex: 0, responses: Array(questions.length).fill(null) };
+let latestResult = null;
+let latestShareData = null;
 
-quizDiv.addEventListener("change", (event) => {
-  const target = event.target;
-  if (!(target instanceof HTMLInputElement) || target.type !== "radio") return;
-  const name = target.name;
-  document.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
-    radio.closest("label")?.classList.toggle("selected", radio.checked);
-  });
-  updateProgress();
-  saveResponses();
-});
+const getSectionName = (i) => sections[i] || "General";
+const answerLabel = (v) => (options.find(o => o.value === v) || {}).label || "Unanswered";
 
-function updateProgress() {
-  const {answered} = gatherResponses();
+function renderQuestion() {
+  const i = state.currentQuestionIndex;
+  const answered = state.responses.filter(v => v !== null).length;
   const pct = Math.round((answered / questions.length) * 100);
+  const currentVal = state.responses[i];
+
+  quizDiv.innerHTML = `
+    <div class="small">${getSectionName(i)} · Question ${i + 1} of ${questions.length}</div>
+    <div class="progress-wrap"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><div class="progress-fill" style="width:${pct}%"></div></div></div>
+    <div class="question-title">${questions[i]}</div>
+    ${options.map((o) => `<button type="button" class="option-btn ${currentVal === o.value ? "selected" : ""}" data-value="${o.value}">${o.label}</button>`).join("\n")}
+    <div class="small">Selected: <strong>${answerLabel(currentVal)}</strong></div>
+    <div class="actions"><button type="button" onclick="jumpToReview()">Review Answers</button><button type="button" onclick="exportResults()">Export Responses + Results</button><button type="button" onclick="clearAllAnswers()">Clear All</button></div>
+  `;
+
+  quizDiv.querySelectorAll('.option-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.responses[i] = Number(btn.dataset.value);
+      saveProgress();
+      renderQuestion();
+      updateFooter();
+    });
+  });
+}
+
+function updateFooter() {
+  const answered = state.responses.filter(v => v !== null).length;
   const remaining = Math.max(0, MIN_REQUIRED - answered);
-  const requirement = remaining === 0
-    ? "You can view results now."
-    : `Answer ${remaining} more question${remaining === 1 ? "" : "s"} to unlock results.`;
-  document.getElementById("progressText").textContent = `Answered ${answered}/${questions.length} questions (${pct}%). ${requirement}`;
-  document.getElementById("progressFill").style.width = `${pct}%`;
-  progressBarEl?.setAttribute("aria-valuenow", String(pct));
-  if (seeResultsBtn) {
-    seeResultsBtn.disabled = answered < MIN_REQUIRED;
-    seeResultsBtn.title = answered < MIN_REQUIRED ? `Need ${remaining} more answer${remaining === 1 ? "" : "s"}.` : "Calculate your quiz results";
-  }
+  const base = `Answered ${answered}/${questions.length} · ${Math.round(answered / questions.length * 100)}%`;
+  document.getElementById('footerProgress').textContent = remaining ? `${base} · ${remaining} more to unlock results` : `${base} · Results unlocked`;
+  backBtn.disabled = state.currentQuestionIndex <= 0;
+  nextBtn.textContent = state.currentQuestionIndex >= questions.length - 1 ? 'Review' : 'Next';
 }
 
-function saveResponses() {
-  const {responses} = gatherResponses();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(responses));
+function showQuestion(i) {
+  state.currentQuestionIndex = i;
+  saveProgress();
+  renderQuestion();
+  updateFooter();
 }
 
-function restoreResponses() {
+function goBack() { if (state.currentQuestionIndex > 0) showQuestion(state.currentQuestionIndex - 1); }
+function goNext() { if (state.currentQuestionIndex < questions.length - 1) showQuestion(state.currentQuestionIndex + 1); else renderReview(); }
+function jumpToReview() { renderReview(); updateFooterReview(); }
+
+function renderReview() {
+  const answered = state.responses.filter(v => v !== null).length;
+  quizDiv.innerHTML = `<h2>Review your answers</h2><p class="small">You answered ${answered} of ${questions.length}. Edit any response before submitting.</p>${questions.map((q, i) => `<div class="review-item"><div><strong>Q${i + 1}</strong> · ${q}<div class="small">${answerLabel(state.responses[i])}</div></div><button type="button" data-edit="${i}">Edit</button></div>`).join('')}<div class="actions"><button type="button" onclick="showQuestion(0)">Back to quiz</button><button type="button" class="primary" onclick="calculateResults()">Submit & See Results</button></div>`;
+  quizDiv.querySelectorAll('[data-edit]').forEach((btn) => btn.addEventListener('click', () => showQuestion(Number(btn.dataset.edit))));
+}
+function updateFooterReview() { backBtn.disabled = false; nextBtn.textContent = 'Submit'; document.getElementById('footerProgress').textContent = 'Review mode'; }
+
+function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function restoreProgress() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return;
   try {
     const saved = JSON.parse(raw);
-    if (!Array.isArray(saved)) return;
-    saved.forEach((value, i) => {
-      if (value === null || value === undefined) return;
-      const el = document.querySelector(`input[name="q${i}"][value="${value}"]`);
-      if (el) {
-        el.checked = true;
-        el.closest("label")?.classList.add("selected");
-      }
-    });
-  } catch {
-    localStorage.removeItem(STORAGE_KEY);
-  }
-}
-
-function jumpToFirstUnanswered() {
-  const first = questions.findIndex((_, i) => !document.querySelector(`input[name="q${i}"]:checked`));
-  if (first === -1) return;
-  const card = document.querySelectorAll(".question")[first];
-  card?.scrollIntoView({behavior: "smooth", block: "center"});
+    if (!Array.isArray(saved.responses)) return;
+    state.responses = saved.responses.slice(0, questions.length);
+    while (state.responses.length < questions.length) state.responses.push(null);
+    state.currentQuestionIndex = Math.max(0, Math.min(questions.length - 1, Number(saved.currentQuestionIndex) || 0));
+  } catch { localStorage.removeItem(STORAGE_KEY); }
 }
 
 function gatherResponses() {
-  const responses = [];
+  const responses = state.responses.slice(0, questions.length).map(v => (v === null || v === undefined ? null : Number(v)));
   let answered = 0;
   let dkCount = 0;
-  for (let i = 0; i < questions.length; i++) {
-    const el = document.querySelector(`input[name="q${i}"]:checked`);
-    if (el) {
-      const v = Number(el.value);
-      responses.push(v);
-      answered++;
-      if (v === 0) dkCount++;
-    } else {
-      responses.push(null);
-    }
-  }
+  responses.forEach((v) => { if (v !== null) { answered++; if (v === 0) dkCount++; }});
   return {responses, answered, dkCount};
 }
-
-function averageForCategory(responses, indices) {
-  let total = 0;
-  let count = 0;
-  indices.forEach(idx => {
-    const r = responses[idx];
-    if (r !== null) {
-      total += r;
-      count += 1;
-    }
-  });
-  return count ? total / count : null;
-}
-
+function averageForCategory(responses, indices) { let total = 0, count = 0; indices.forEach((idx) => { const r = responses[idx]; if (r !== null) { total += r; count += 1; }}); return count ? total / count : null; }
 function scoreCaucus(responses, caucusName) {
-  const profile = profiles[caucusName];
-  let raw = 0;
-  let max = 0;
-  const catDetails = {};
-
+  const profile = profiles[caucusName]; let raw = 0, max = 0; const catDetails = {};
   for (const [catName, target] of Object.entries(profile)) {
-    const avg = averageForCategory(responses, cats[catName]);
-    const weight = catWeights[catName] || 1;
-    if (avg === null) continue;
-
-    // distance from target on a -2..2 scale
-    const dist = Math.abs(avg - target);
-    const catScore = Math.max(0, 4 - dist) * weight; // higher is better
-    const catMax = 4 * weight;
-    raw += catScore;
-    max += catMax;
-    catDetails[catName] = {
-      avg: avg,
-      target: target,
-      weight: weight,
-      score: catScore,
-      max: catMax
-    };
+    const avg = averageForCategory(responses, cats[catName]); const weight = catWeights[catName] || 1; if (avg === null) continue;
+    const dist = Math.abs(avg - target); const catScore = Math.max(0, 4 - dist) * weight; const catMax = 4 * weight;
+    raw += catScore; max += catMax; catDetails[catName] = {avg, target, weight, score: catScore, max: catMax};
   }
-
-  return {
-    raw,
-    max,
-    pct: max ? (raw / max) * 100 : 0,
-    catDetails
-  };
+  return {raw, max, pct: max ? (raw / max) * 100 : 0, catDetails};
 }
-
 function applyCarnationBridgeBonus(scored, responses) {
-  const breadAndRoses = scored.find(entry => entry.name === "Bread & Roses");
-  const carnation = scored.find(entry => entry.name === "Carnation");
+  const breadAndRoses = scored.find(entry => entry.name === "Bread & Roses"); const carnation = scored.find(entry => entry.name === "Carnation");
   if (!breadAndRoses || !carnation) return;
-
-  const thirdCampAvg = averageForCategory(responses, cats.critique_states || []);
-  const armedResistanceAvg = averageForCategory(responses, cats.armed_resistance || []);
+  const thirdCampAvg = averageForCategory(responses, cats.critique_states || []); const armedResistanceAvg = averageForCategory(responses, cats.armed_resistance || []);
   if (thirdCampAvg === null || armedResistanceAvg === null) return;
-
-  const mostlyBreadAndRoses = breadAndRoses.pct >= 76;
-  const lowerThirdCampAlignment = thirdCampAvg <= 0.6;
-  const mildlyMoreArmedResistanceSympathy = armedResistanceAvg >= 0.25 && armedResistanceAvg <= 1.5;
+  const mostlyBreadAndRoses = breadAndRoses.pct >= 76; const lowerThirdCampAlignment = thirdCampAvg <= 0.6; const mildlyMoreArmedResistanceSympathy = armedResistanceAvg >= 0.25 && armedResistanceAvg <= 1.5;
   if (!mostlyBreadAndRoses || !lowerThirdCampAlignment || !mildlyMoreArmedResistanceSympathy) return;
-
-  const bonus = Math.min(
-    4,
-    Math.max(0, (breadAndRoses.pct - 72) * 0.08)
-      + Math.max(0, 0.8 - thirdCampAvg) * 1.8
-      + Math.max(0, armedResistanceAvg - 0.2) * 1.1
-  );
-
-  if (bonus <= 0) return;
-  carnation.pct = Math.min(100, carnation.pct + bonus);
-  carnation.raw = (carnation.pct / 100) * carnation.max;
+  const bonus = Math.min(4, Math.max(0, (breadAndRoses.pct - 72) * 0.08) + Math.max(0, 0.8 - thirdCampAvg) * 1.8 + Math.max(0, armedResistanceAvg - 0.2) * 1.1);
+  if (bonus <= 0) return; carnation.pct = Math.min(100, carnation.pct + bonus); carnation.raw = (carnation.pct / 100) * carnation.max;
+}
+function calculateIndependent(responses, dkCount, scored) {
+  const dkRatio = dkCount / questions.length; const top = scored[0] ? scored[0].pct : 0; const second = scored[1] ? scored[1].pct : 0; const spread = top - second;
+  let pct = dkRatio * 130 + Math.max(0, 16 - spread) * 1.8;
+  const answeredVals = responses.filter(x => x !== null);
+  if (answeredVals.length) { const strongCount = answeredVals.filter(x => Math.abs(x) === 2).length; const strongRatio = strongCount / answeredVals.length; pct += Math.max(0, 0.35 - strongRatio) * 25; }
+  return Math.min(100, pct);
 }
 
-function calculateIndependent(responses, dkCount, scored) {
-  const dkRatio = dkCount / questions.length;
-  const top = scored[0] ? scored[0].pct : 0;
-  const second = scored[1] ? scored[1].pct : 0;
-  const spread = top - second;
-
-  // independent goes up with neutrals and with weak separation
-  let pct = dkRatio * 130 + Math.max(0, 16 - spread) * 1.8;
-
-  // also increases slightly if answers are all middling rather than strongly patterned
-  const answeredVals = responses.filter(x => x !== null);
-  if (answeredVals.length) {
-    const strongCount = answeredVals.filter(x => Math.abs(x) === 2).length;
-    const strongRatio = strongCount / answeredVals.length;
-    pct += Math.max(0, 0.35 - strongRatio) * 25;
-  }
-
-  return Math.min(100, pct);
+function sanitizeTemplate(template) {
+  const blocked = /(kill|murder|lynch|suicide|self-harm|kike|fag|tranny|nigger|raghead|spic|chink|gas\s+the|genocide\s+all|go\s+die|hang\s+all)/i;
+  return !blocked.test(template || '');
+}
+function getShareRow(resultName) { const row = shareSpreadsheetRows[resultName] || {handle: '', templates: []}; return {handle: row.handle || '', templates: (row.templates || []).filter(sanitizeTemplate)}; }
+function buildShareTextForResult(primaryName, primaryHandle) {
+  const rand = Math.random(); const names = Object.keys(shareSpreadsheetRows).filter(n => n !== primaryName);
+  let mode = 'default-format'; let rowName = primaryName;
+  if (rand >= 0.99 && names.length) { mode = 'different-row-spreadsheet-template'; rowName = names[Math.floor(Math.random() * names.length)]; }
+  else if (rand >= 0.66) { mode = 'same-row-spreadsheet-template'; }
+  const row = getShareRow(rowName);
+  let text = `I got ${primaryHandle || primaryName} on this quiz [link]`;
+  if (mode !== 'default-format' && row.templates.length) text = row.templates[Math.floor(Math.random() * row.templates.length)];
+  if (mode !== 'default-format' && !row.templates.length) mode = 'default-format';
+  const withLink = text.includes('[link]') ? text.replaceAll('[link]', QUIZ_URL) : `${text} ${QUIZ_URL}`;
+  return {mode, shareText: withLink.trim(), handleUsed: primaryHandle || row.handle || ''};
+}
+function buildWhySignals(topResult) {
+  return Object.entries(topResult.catDetails || {}).map(([name, v]) => ({name, strength: (4 - Math.abs(v.avg - v.target)) * (v.weight || 1), avg: v.avg, target: v.target}))
+    .sort((a,b) => b.strength - a.strength).slice(0,5)
+    .map(x => `You aligned with ${x.name} (your avg ${x.avg.toFixed(2)} vs target ${x.target}).`);
 }
 
 function calculateResults() {
   const {responses, answered, dkCount} = gatherResponses();
-
-  if (answered < MIN_REQUIRED) {
-    document.getElementById("results").style.display = "block";
-    document.getElementById("results").innerHTML = `<h2>Results</h2><p>Please answer at least ${MIN_REQUIRED} of ${questions.length} questions to get a result.</p>`;
-    return null;
-  }
-
-  const scored = Object.keys(profiles).map(name => {
-    const s = scoreCaucus(responses, name);
-    return {name, pct: s.pct, raw: s.raw, max: s.max, catDetails: s.catDetails};
-  });
-
-  applyCarnationBridgeBonus(scored, responses);
-  scored.sort((a,b) => b.pct - a.pct);
-
+  if (answered < MIN_REQUIRED) { resultsDiv.style.display = 'block'; resultsDiv.innerHTML = `<h2>Results</h2><p>Please answer at least ${MIN_REQUIRED} of ${questions.length} questions to get a result.</p>`; return null; }
+  const scored = Object.keys(profiles).map(name => { const s = scoreCaucus(responses, name); return {name, pct: s.pct, raw: s.raw, max: s.max, catDetails: s.catDetails}; });
+  applyCarnationBridgeBonus(scored, responses); scored.sort((a,b) => b.pct - a.pct);
   const independentPct = calculateIndependent(responses, dkCount, scored);
-  const augmented = [...scored, {name: "Independent DSA Member", pct: independentPct, raw: independentPct, max: 100, catDetails: {}}]
-    .sort((a,b) => b.pct - a.pct);
-
+  const augmented = [...scored, {name: "Independent DSA Member", pct: independentPct, raw: independentPct, max: 100, catDetails: {}}].sort((a,b) => b.pct - a.pct);
   const top3 = augmented.slice(0,3);
-  const top3WithMeta = top3.map((x) => ({
-    ...x,
-    meta: resultMeta[x.name] || {blurb: "No description available.", site: "", logo: "", color: "#6b7280", alt: `${x.name} logo`}
-  }));
+  const top3WithMeta = top3.map(x => ({...x, meta: resultMeta[x.name] || {blurb: "No description available.", site: "", logo: "", color: "#6b7280", alt: `${x.name} logo`}}));
+  const primary = top3WithMeta[0];
+  const row = getShareRow(primary.name);
+  const handle = row.handle || `@${primary.name.replace(/[^a-z0-9]/gi,'')}`;
+  latestShareData = buildShareTextForResult(primary.name, handle);
+  const whySignals = buildWhySignals(top3[0]);
 
-  resultsDiv.style.display = "block";
-  resultsDiv.innerHTML = `
-    <h2>Results</h2>
-    <p><strong>Closest match:</strong> ${top3[0].name}</p>
-    <p><strong>Also similar to:</strong> ${top3[1].name}, ${top3[2].name}</p>
-    ${top3WithMeta.map(x => `<div class="result-card" style="border-left-color:${x.meta.color || "#6b7280"}"><div class="result-card-head">${x.meta.logo ? `<img class="result-card-logo" src="${x.meta.logo}" alt="${x.meta.alt || `${x.name} logo`}" loading="lazy" onerror="this.style.display='none'">` : ""}<div><strong style="color:${x.meta.color || "#6b7280"}">${x.name}</strong><div>${x.pct.toFixed(1)}%</div><div class="small">${x.meta.blurb || "No description available."}</div>${x.meta.site ? `<div><a href="${x.meta.site}" target="_blank" rel="noopener noreferrer">Learn more</a></div>` : ""}</div></div></div>`).join("")}
-    <p class="small">Answered ${answered}/${questions.length} questions. Neutral responses: ${dkCount}.</p>
-    <details>
-      <summary>Show full score breakdown</summary>
-      <pre>${augmented.map(x => `${x.name}: ${x.pct.toFixed(1)}%`).join("\n")}</pre>
-    </details>
-    <details>
-      <summary>Show category breakdown for top result</summary>
-      <pre>${Object.entries(top3[0].catDetails || {}).map(([k,v]) =>
-        `${k} -> your avg: ${v.avg.toFixed(2)}, target: ${v.target}, score: ${v.score.toFixed(2)}/${v.max.toFixed(2)}`
-      ).join("\n")}</pre>
-    </details>
-  `;
-  resultsDiv.scrollIntoView({behavior: "smooth", block: "start"});
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = `<h2>Results</h2><p><strong>Closest match:</strong> ${top3[0].name}</p><div class="result-grid">${top3WithMeta.map(x => `<div class="result-card" style="border-left-color:${x.meta.color || '#b3262d'}"><div class="result-card-head">${x.meta.logo ? `<img class="result-card-logo" src="${x.meta.logo}" alt="${x.meta.alt || `${x.name} logo`}" loading="lazy" onerror="this.style.display='none'">` : ''}<div><strong style="color:${x.meta.color || '#b3262d'}">${x.name}</strong><div>${x.pct.toFixed(1)}%</div><div class="small">${x.meta.blurb || ''}</div><div class="small">${x.meta.site ? `<a href='${x.meta.site}' target='_blank' rel='noopener noreferrer'>Website</a>` : ''}</div></div></div></div>`).join('')}</div><h3>Why you got this</h3><ul>${whySignals.slice(0,5).map(s => `<li>${s}</li>`).join('')}</ul><div class="actions"><button type="button" onclick="openTwitterShare()" class="primary">Share on Twitter / X</button><button type="button" onclick="exportResults()">Export Responses + Results</button><button type="button" onclick="jumpToReview()">Edit Answers</button></div><details><summary>Show full score breakdown</summary><pre>${augmented.map(x => `${x.name}: ${x.pct.toFixed(1)}%`).join("\n")}</pre></details>`;
+  resultsDiv.scrollIntoView({behavior: 'smooth', block: 'start'});
+  latestResult = {answered, dkCount, responses, top3, top3WithMeta, breakdown: augmented, whySignals};
+  saveProgress();
+  return latestResult;
+}
 
-  return {
-    answered,
-    dkCount,
-    responses,
-    top3,
-    top3WithMeta,
-    breakdown: augmented
-  };
+function openTwitterShare() {
+  const result = latestResult || calculateResults();
+  if (!result || !latestShareData) return;
+  const intent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(latestShareData.shareText)}&url=${encodeURIComponent(QUIZ_URL)}`;
+  window.open(intent, '_blank', 'noopener,noreferrer');
 }
 
 function exportResults() {
-  const result = calculateResults();
+  const result = latestResult || calculateResults();
   if (!result) return;
   const payload = {
     title: "DSA Tendency Quiz Demo v4",
     exportedAt: new Date().toISOString(),
     answered: result.answered,
     neutralCount: result.dkCount,
-    questions: questions.map((q, i) => ({
-      number: i + 1,
-      question: q,
-      response: result.responses[i]
-    })),
+    currentQuestionIndex: state.currentQuestionIndex,
+    questions: questions.map((q, i) => ({number: i + 1, question: q, response: result.responses[i]})),
     top3: result.top3,
-    top3WithMeta: result.top3WithMeta.map(item => ({
-      name: item.name,
-      pct: item.pct,
-      logo: item.meta.logo || "",
-      color: item.meta.color || "#6b7280",
-      site: item.meta.site || "",
-      blurb: item.meta.blurb || ""
-    })),
-    breakdown: result.breakdown.map(item => ({
-      ...item,
-      logo: (resultMeta[item.name] || {}).logo || "",
-      color: (resultMeta[item.name] || {}).color || "#6b7280",
-      site: (resultMeta[item.name] || {}).site || "",
-      blurb: (resultMeta[item.name] || {}).blurb || ""
-    }))
+    top3WithMeta: result.top3WithMeta.map(item => ({name: item.name, pct: item.pct, logo: item.meta.logo || '', color: item.meta.color || '#6b7280', site: item.meta.site || '', blurb: item.meta.blurb || ''})),
+    breakdown: result.breakdown.map(item => ({...item, logo: (resultMeta[item.name] || {}).logo || '', color: (resultMeta[item.name] || {}).color || '#6b7280', site: (resultMeta[item.name] || {}).site || '', blurb: (resultMeta[item.name] || {}).blurb || ''})),
+    whySignals: result.whySignals || [],
+    share: latestShareData ? {mode: latestShareData.mode, text: latestShareData.shareText, handle: latestShareData.handleUsed} : null
   };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: "application/json"});
-  const a = document.createElement("a");
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = "dsa_tendency_quiz_export_v4.json";
+  a.download = 'dsa_tendency_quiz_export_v5.json';
   a.click();
   URL.revokeObjectURL(a.href);
 }
 
-function buildShareText(result) {
-  const top = result.top3?.[0];
-  const runnersUp = result.top3?.slice(1).map((item) => item.name).join(", ") || "N/A";
-  const scoreLine = result.top3?.map((item) => `${item.name}: ${item.pct.toFixed(1)}%`).join(" | ") || "";
-  const shareUrl = buildSafeShareUrl(result);
-  return [
-    `I got ${top?.name || "a result"} on the DSA Tendency Quiz Demo (${top?.pct?.toFixed(1) || "0.0"}%).`,
-    `Also similar to: ${runnersUp}.`,
-    `Answered ${result.answered}/${questions.length} questions (${result.dkCount} neutral).`,
-    scoreLine,
-    shareUrl
-  ].filter(Boolean).join("\n");
-}
-
-function buildSafeShareUrl(result) {
-  const safePayload = {
-    version: SHARE_VERSION,
-    answered: result.answered,
-    neutralCount: result.dkCount,
-    top3: (result.top3 || []).map((item) => ({
-      name: item.name,
-      pct: Number(item.pct.toFixed(1))
-    }))
-  };
-
-  const encoded = btoa(encodeURIComponent(JSON.stringify(safePayload)));
-  const url = new URL(window.location.href);
-  url.searchParams.set(SHARED_RESULTS_PARAM, encoded);
-  return url.toString();
-}
-
-async function shareResults() {
-  const feedbackEl = document.getElementById("shareFeedback");
-  const result = calculateResults();
-  if (!result) {
-    if (feedbackEl) {
-      feedbackEl.textContent = `Answer at least ${MIN_REQUIRED} questions before sharing.`;
-    }
-    return;
-  }
-
-  const text = buildShareText(result);
-  const shareUrl = buildSafeShareUrl(result);
-  const sharePayload = {
-    title: "My DSA Tendency Quiz Results",
-    text,
-    url: shareUrl
-  };
-
-  try {
-    if (navigator.share) {
-      await navigator.share(sharePayload);
-      if (feedbackEl) feedbackEl.textContent = "Shared successfully.";
-      return;
-    }
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
-      if (feedbackEl) feedbackEl.textContent = "Share text copied to clipboard. Paste it anywhere.";
-      return;
-    }
-    throw new Error("No supported share method");
-  } catch {
-    if (feedbackEl) {
-      feedbackEl.textContent = "Couldn't open share sheet. Try Export Responses + Results instead.";
-    }
-  }
-}
-
 function clearAllAnswers() {
-  document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
-  document.querySelectorAll(".options label.selected").forEach(el => el.classList.remove("selected"));
+  state = {currentQuestionIndex: 0, responses: Array(questions.length).fill(null)};
+  latestResult = null;
+  latestShareData = null;
   localStorage.removeItem(STORAGE_KEY);
-  resultsDiv.style.display = "none";
-  updateProgress();
+  resultsDiv.style.display = 'none';
+  renderQuestion();
+  updateFooter();
 }
-restoreResponses();
-updateProgress();
+
+backBtn.addEventListener('click', () => {
+  if ((quizDiv.textContent || '').includes('Review your answers')) showQuestion(Math.max(0, state.currentQuestionIndex));
+  else goBack();
+});
+nextBtn.addEventListener('click', () => {
+  if ((quizDiv.textContent || '').includes('Review your answers')) calculateResults();
+  else goNext();
+});
+
+restoreProgress();
+renderQuestion();
+updateFooter();
 </script>
 </body>
 </html>
