@@ -272,31 +272,31 @@ const catWeights = DATA.cat_weights;
 questions[27] = "Leaders should be chosen through organized debate and collective decision-making, not mainly through mass online voting.";
 questions[44] = "Maintaining trust with Palestinian-led and anti-Zionist movement groups is more important than winning elections.";
 questions[54] = "Socialists should support liberation struggles even when they disagree with the politics of the groups leading them.";
-questions.push("Co-optation is a greater threat to our movement than marginalization.");
+questions.push("Socialist organizations should try to keep harder-line socialist tendencies inside the coalition rather than pushing them out to maintain unity.");
 
-cats.cooptation_threat = [questions.length - 1];
-catWeights.cooptation_threat = 1.05;
+cats.coalition_harder_line_unity = [questions.length - 1];
+catWeights.coalition_harder_line_unity = 1.0;
 
-const cooptationTargets = {
-  "Bread & Roses": 0.35,
-  "Groundwork": -0.6,
-  "Marxist Unity Group": 1.15,
-  "Reform & Revolution": 0.95,
-  "Reform & Revolution (Millnerite)": 1.0,
-  "Reform & Revolution (Lockerite)": 1.0,
-  "Red Star": 1.2,
-  "Springs of Revolution": 0.9,
-  "Carnation": -0.55,
-  "Communist Caucus": 0.9,
-  "Liberation": 1.25,
-  "Socialist Majority": -0.75,
-  "Emerge": 0.15,
-  "Libertarian Socialist Caucus": 0.95
+const coalitionUnityTargets = {
+  "Socialist Majority": 1.45,
+  "Bread & Roses": 1.55,
+  "Reform & Revolution": 1.35,
+  "Reform & Revolution (Millnerite)": 1.4,
+  "Reform & Revolution (Lockerite)": 1.35,
+  "Marxist Unity Group": 1.5,
+  "Red Star": 1.4,
+  "Liberation": 1.45,
+  "Communist Caucus": 1.4,
+  "Libertarian Socialist Caucus": 1.5,
+  "Emerge": 0.7,
+  "Springs of Revolution": 0.15,
+  "Groundwork": -1.2,
+  "Carnation": -1.0
 };
 
-Object.entries(cooptationTargets).forEach(([name, value]) => {
+Object.entries(coalitionUnityTargets).forEach(([name, value]) => {
   if (profiles[name]) {
-    Object.assign(profiles[name], {cooptation_threat: value});
+    Object.assign(profiles[name], {coalition_harder_line_unity: value});
   }
 });
 
