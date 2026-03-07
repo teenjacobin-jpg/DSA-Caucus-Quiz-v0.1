@@ -166,6 +166,11 @@ summary {
   gap: 8px;
 }
 
+.share-feedback {
+  margin-top: 4px;
+  min-height: 1.2em;
+}
+
 .progress-wrap {
   margin: 8px 0 6px;
 }
@@ -256,10 +261,12 @@ should inform your way of assessing the different tendencies in DSA.
 <div class="controls">
   <div class="controls-actions">
     <button id="seeResultsBtn" onclick="calculateResults()">See Results</button>
+    <button onclick="shareResults()">Share Results</button>
     <button onclick="exportResults()">Export Responses + Results</button>
     <button onclick="jumpToFirstUnanswered()">Jump to First Unanswered</button>
     <button onclick="clearAllAnswers()">Clear All</button>
   </div>
+  <div id="shareFeedback" class="small share-feedback" aria-live="polite"></div>
   <div class="progress-wrap">
     <div id="progressText" class="small" aria-live="polite">Answered 0/0 questions (0%).</div>
     <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Quiz completion"><div id="progressFill" class="progress-fill"></div></div>
@@ -674,6 +681,55 @@ function exportResults() {
   a.download = "dsa_tendency_quiz_export_v4.json";
   a.click();
   URL.revokeObjectURL(a.href);
+}
+
+function buildShareText(result) {
+  const top = result.top3?.[0];
+  const runnersUp = result.top3?.slice(1).map((item) => item.name).join(", ") || "N/A";
+  const scoreLine = result.top3?.map((item) => `${item.name}: ${item.pct.toFixed(1)}%`).join(" | ") || "";
+  return [
+    `I got ${top?.name || "a result"} on the DSA Tendency Quiz Demo (${top?.pct?.toFixed(1) || "0.0"}%).`,
+    `Also similar to: ${runnersUp}.`,
+    `Answered ${result.answered}/${questions.length} questions (${result.dkCount} neutral).`,
+    scoreLine,
+    window.location.href
+  ].filter(Boolean).join("\n");
+}
+
+async function shareResults() {
+  const feedbackEl = document.getElementById("shareFeedback");
+  const result = calculateResults();
+  if (!result) {
+    if (feedbackEl) {
+      feedbackEl.textContent = `Answer at least ${MIN_REQUIRED} questions before sharing.`;
+    }
+    return;
+  }
+
+  const text = buildShareText(result);
+  const sharePayload = {
+    title: "My DSA Tendency Quiz Results",
+    text,
+    url: window.location.href
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(sharePayload);
+      if (feedbackEl) feedbackEl.textContent = "Shared successfully.";
+      return;
+    }
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      if (feedbackEl) feedbackEl.textContent = "Share text copied to clipboard. Paste it anywhere.";
+      return;
+    }
+    throw new Error("No supported share method");
+  } catch {
+    if (feedbackEl) {
+      feedbackEl.textContent = "Couldn't open share sheet. Try Export Responses + Results instead.";
+    }
+  }
 }
 
 function clearAllAnswers() {
