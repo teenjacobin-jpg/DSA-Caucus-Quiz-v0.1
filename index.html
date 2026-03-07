@@ -78,6 +78,13 @@ button:hover {
   box-shadow: 0 4px 10px rgba(41, 94, 199, 0.2);
 }
 
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .question {
   margin-bottom: 14px;
   padding: 14px;
@@ -248,14 +255,14 @@ should inform your way of assessing the different tendencies in DSA.
 
 <div class="controls">
   <div class="controls-actions">
-    <button onclick="calculateResults()">See Results</button>
+    <button id="seeResultsBtn" onclick="calculateResults()">See Results</button>
     <button onclick="exportResults()">Export Responses + Results</button>
     <button onclick="jumpToFirstUnanswered()">Jump to First Unanswered</button>
     <button onclick="clearAllAnswers()">Clear All</button>
   </div>
   <div class="progress-wrap">
-    <div id="progressText" class="small">Answered 0/0 questions (0%).</div>
-    <div class="progress-bar" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+    <div id="progressText" class="small" aria-live="polite">Answered 0/0 questions (0%).</div>
+    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Quiz completion"><div id="progressFill" class="progress-fill"></div></div>
   </div>
 </div>
 
@@ -421,6 +428,9 @@ const options = [
 const quizDiv = document.getElementById("quiz");
 const resultsDiv = document.getElementById("results");
 const STORAGE_KEY = "dsa_quiz_responses_v4";
+const MIN_REQUIRED = Math.ceil(questions.length * 0.6);
+const seeResultsBtn = document.getElementById("seeResultsBtn");
+const progressBarEl = document.querySelector(".progress-bar");
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
@@ -448,8 +458,17 @@ quizDiv.addEventListener("change", (event) => {
 function updateProgress() {
   const {answered} = gatherResponses();
   const pct = Math.round((answered / questions.length) * 100);
-  document.getElementById("progressText").textContent = `Answered ${answered}/${questions.length} questions (${pct}%).`;
+  const remaining = Math.max(0, MIN_REQUIRED - answered);
+  const requirement = remaining === 0
+    ? "You can view results now."
+    : `Answer ${remaining} more question${remaining === 1 ? "" : "s"} to unlock results.`;
+  document.getElementById("progressText").textContent = `Answered ${answered}/${questions.length} questions (${pct}%). ${requirement}`;
   document.getElementById("progressFill").style.width = `${pct}%`;
+  progressBarEl?.setAttribute("aria-valuenow", String(pct));
+  if (seeResultsBtn) {
+    seeResultsBtn.disabled = answered < MIN_REQUIRED;
+    seeResultsBtn.title = answered < MIN_REQUIRED ? `Need ${remaining} more answer${remaining === 1 ? "" : "s"}.` : "Calculate your quiz results";
+  }
 }
 
 function saveResponses() {
@@ -571,9 +590,9 @@ function calculateIndependent(responses, dkCount, scored) {
 function calculateResults() {
   const {responses, answered, dkCount} = gatherResponses();
 
-  if (answered < Math.ceil(questions.length * 0.6)) {
+  if (answered < MIN_REQUIRED) {
     document.getElementById("results").style.display = "block";
-    document.getElementById("results").innerHTML = "<h2>Results</h2><p>Please answer at least 60% of the questions to get a result.</p>";
+    document.getElementById("results").innerHTML = `<h2>Results</h2><p>Please answer at least ${MIN_REQUIRED} of ${questions.length} questions to get a result.</p>`;
     return null;
   }
 
