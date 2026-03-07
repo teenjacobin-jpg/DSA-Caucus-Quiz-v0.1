@@ -6,65 +6,212 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DSA Tendency Quiz Demo v4</title>
 <style>
+:root {
+  color-scheme: light;
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-soft: #f8fbff;
+  --border: #d8e2f0;
+  --text: #1e2430;
+  --muted: #5d687a;
+  --primary: #295ec7;
+  --primary-soft: #e9f0ff;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
   max-width: 980px;
   margin: auto;
-  padding: 20px;
+  padding: 24px;
   line-height: 1.45;
+  color: var(--text);
+  background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 60%);
 }
-h1, h2 { margin-bottom: 0.4rem; }
+h1 {
+  margin-bottom: 0.4rem;
+  font-size: clamp(1.8rem, 2vw + 1.3rem, 2.5rem);
+}
+
+h2 {
+  margin-bottom: 0.4rem;
+}
+
 .disclosure {
-  background: #f4f4f4;
-  border-left: 4px solid #777;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
   padding: 14px 16px;
   margin: 18px 0 24px;
+  box-shadow: 0 6px 16px rgba(26, 45, 82, 0.06);
 }
+
 .controls {
   position: sticky;
   top: 0;
-  background: white;
-  padding: 10px 0 14px;
-  border-bottom: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   margin-bottom: 16px;
   z-index: 3;
+  box-shadow: 0 8px 18px rgba(26, 45, 82, 0.08);
 }
+
 button {
-  padding: 10px 16px;
+  border: 1px solid var(--primary);
+  background: var(--primary-soft);
+  color: #11377f;
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 9px 15px;
   margin-right: 10px;
   margin-bottom: 8px;
   cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
+
+button:hover {
+  background: #dfe9ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(41, 94, 199, 0.2);
+}
+
 .question {
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 14px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(26, 45, 82, 0.04);
 }
+
 .question-title {
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 8px;
 }
+
 .options label {
-  display: block;
-  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
+
+.options label:hover {
+  background: var(--surface-soft);
+  border-color: var(--border);
+}
+
+.options input {
+  accent-color: var(--primary);
+}
+
+.options input:checked + span {
+  font-weight: 600;
+}
+
+.options label.selected {
+  background: #ecf3ff;
+  border-color: #b8cef8;
+}
+
 .result-box {
   margin-top: 24px;
   padding: 16px;
-  border: 1px solid #ccc;
-  background: #fafafa;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 10px 22px rgba(26, 45, 82, 0.09);
 }
+
 .small {
-  color: #555;
+  color: var(--muted);
   font-size: 0.92rem;
 }
+
 pre {
   white-space: pre-wrap;
   word-break: break-word;
+  background: #f6f9ff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
 }
+
 details {
   margin-top: 10px;
 }
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.controls-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.progress-wrap {
+  margin: 8px 0 6px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #eef3fb;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #4c78d9, #295ec7);
+  transition: width 0.2s ease;
+}
+
+.match-list {
+  margin: 10px 0 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.match-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #f8fbff;
+}
+
+.match-item-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.match-item-bar {
+  margin-top: 6px;
+  height: 7px;
+  border-radius: 999px;
+  background: #e6edf9;
+  overflow: hidden;
+}
+
+.match-item-bar span {
+  display: block;
+  height: 100%;
+  background: #3568cd;
+}
+
 </style>
 </head>
 <body>
@@ -77,9 +224,16 @@ should inform your way of assessing the different tendencies in DSA.
 </div>
 
 <div class="controls">
-  <button onclick="calculateResults()">See Results</button>
-  <button onclick="exportResults()">Export Responses + Results</button>
-  <button onclick="clearAllAnswers()">Clear All</button>
+  <div class="controls-actions">
+    <button onclick="calculateResults()">See Results</button>
+    <button onclick="exportResults()">Export Responses + Results</button>
+    <button onclick="jumpToFirstUnanswered()">Jump to First Unanswered</button>
+    <button onclick="clearAllAnswers()">Clear All</button>
+  </div>
+  <div class="progress-wrap">
+    <div id="progressText" class="small">Answered 0/0 questions (0%).</div>
+    <div class="progress-bar" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+  </div>
   <div class="small">GitHub-ready single-file demo. Provisional scoring. More “Don't Know / Don't Care / Neutral” answers move you toward <strong>Independent DSA Member</strong>.</div>
 </div>
 
@@ -102,17 +256,71 @@ const options = [
 ];
 
 const quizDiv = document.getElementById("quiz");
+const resultsDiv = document.getElementById("results");
+const STORAGE_KEY = "dsa_quiz_responses_v4";
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
   div.innerHTML = `
     <div class="question-title">${i+1}. ${q}</div>
     <div class="options">
-      ${options.map(o => `<label><input type="radio" name="q${i}" value="${o.value}"> ${o.label}</label>`).join("")}
+      ${options.map(o => `<label><input type="radio" name="q${i}" value="${o.value}"><span>${o.label}</span></label>`).join("")}
     </div>
   `;
   quizDiv.appendChild(div);
 });
+
+
+quizDiv.addEventListener("change", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLInputElement) || target.type !== "radio") return;
+  const name = target.name;
+  document.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
+    radio.closest("label")?.classList.toggle("selected", radio.checked);
+  });
+  updateProgress();
+  saveResponses();
+});
+
+
+
+function updateProgress() {
+  const {answered} = gatherResponses();
+  const pct = Math.round((answered / questions.length) * 100);
+  document.getElementById("progressText").textContent = `Answered ${answered}/${questions.length} questions (${pct}%).`;
+  document.getElementById("progressFill").style.width = `${pct}%`;
+}
+
+function saveResponses() {
+  const {responses} = gatherResponses();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(responses));
+}
+
+function restoreResponses() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved)) return;
+    saved.forEach((value, i) => {
+      if (value === null || value === undefined) return;
+      const el = document.querySelector(`input[name="q${i}"][value="${value}"]`);
+      if (el) {
+        el.checked = true;
+        el.closest("label")?.classList.add("selected");
+      }
+    });
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function jumpToFirstUnanswered() {
+  const first = questions.findIndex((_, i) => !document.querySelector(`input[name="q${i}"]:checked`));
+  if (first === -1) return;
+  const card = document.querySelectorAll(".question")[first];
+  card?.scrollIntoView({behavior: "smooth", block: "center"});
+}
 
 function gatherResponses() {
   const responses = [];
@@ -219,11 +427,12 @@ function calculateResults() {
 
   const top3 = augmented.slice(0,3);
 
-  document.getElementById("results").style.display = "block";
-  document.getElementById("results").innerHTML = `
+  resultsDiv.style.display = "block";
+  resultsDiv.innerHTML = `
     <h2>Results</h2>
     <p><strong>Closest match:</strong> ${top3[0].name}</p>
     <p><strong>Also similar to:</strong> ${top3[1].name}, ${top3[2].name}</p>
+    <div class="match-list">${top3.map(x => `<div class="match-item"><div class="match-item-head"><strong>${x.name}</strong><span>${x.pct.toFixed(1)}%</span></div><div class="match-item-bar"><span style="width:${x.pct.toFixed(1)}%"></span></div></div>`).join("")}</div>
     <p class="small">Answered ${answered}/${questions.length} questions. Neutral responses: ${dkCount}.</p>
     <details>
       <summary>Show full score breakdown</summary>
@@ -236,6 +445,7 @@ function calculateResults() {
       ).join("\n")}</pre>
     </details>
   `;
+  resultsDiv.scrollIntoView({behavior: "smooth", block: "start"});
 
   return {
     answered,
@@ -272,8 +482,13 @@ function exportResults() {
 
 function clearAllAnswers() {
   document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
-  document.getElementById("results").style.display = "none";
+  document.querySelectorAll(".options label.selected").forEach(el => el.classList.remove("selected"));
+  localStorage.removeItem(STORAGE_KEY);
+  resultsDiv.style.display = "none";
+  updateProgress();
 }
+restoreResponses();
+updateProgress();
 </script>
 </body>
 </html>
