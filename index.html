@@ -152,6 +152,89 @@ summary {
   cursor: pointer;
   font-weight: 600;
 }
+
+.controls-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.progress-wrap {
+  margin: 8px 0 6px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #eef3fb;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #4c78d9, #295ec7);
+  transition: width 0.2s ease;
+}
+
+.match-list {
+  margin: 10px 0 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.match-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #f8fbff;
+}
+
+.match-item-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.match-item-bar {
+  margin-top: 6px;
+  height: 7px;
+  border-radius: 999px;
+  background: #e6edf9;
+  overflow: hidden;
+}
+
+.match-item-bar span {
+  display: block;
+  height: 100%;
+  background: #3568cd;
+}
+
+.result-card {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: 10px;
+  background: #f8fbff;
+}
+
+.result-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.result-card-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid var(--border);
+}
 </style>
 </head>
 <body>
@@ -164,10 +247,16 @@ should inform your way of assessing the different tendencies in DSA.
 </div>
 
 <div class="controls">
-  <button onclick="calculateResults()">See Results</button>
-  <button onclick="exportResults()">Export Responses + Results</button>
-  <button onclick="clearAllAnswers()">Clear All</button>
-  <div class="small">GitHub-ready single-file demo. Provisional scoring. More “Don't Know / Don't Care / Neutral” answers move you toward <strong>Independent DSA Member</strong>.</div>
+  <div class="controls-actions">
+    <button onclick="calculateResults()">See Results</button>
+    <button onclick="exportResults()">Export Responses + Results</button>
+    <button onclick="jumpToFirstUnanswered()">Jump to First Unanswered</button>
+    <button onclick="clearAllAnswers()">Clear All</button>
+  </div>
+  <div class="progress-wrap">
+    <div id="progressText" class="small">Answered 0/0 questions (0%).</div>
+    <div class="progress-bar" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+  </div>
 </div>
 
 <div id="quiz"></div>
@@ -180,6 +269,147 @@ const profiles = DATA.profiles;
 const cats = DATA.cats;
 const catWeights = DATA.cat_weights;
 
+questions[27] = "Leaders should be chosen through organized debate and collective decision-making, not mainly through mass online voting.";
+questions[44] = "Maintaining trust with Palestinian-led and anti-Zionist movement groups is more important than winning elections.";
+questions[54] = "Socialists should support liberation struggles even when they disagree with the politics of the groups leading them.";
+questions.push("Co-optation is a greater threat to our movement than marginalization.");
+
+cats.cooptation_threat = [questions.length - 1];
+catWeights.cooptation_threat = 1.05;
+
+const cooptationTargets = {
+  "Bread & Roses": 0.35,
+  "Groundwork": -0.6,
+  "Marxist Unity Group": 1.15,
+  "Reform & Revolution": 0.95,
+  "Reform & Revolution (Millnerite)": 1.0,
+  "Reform & Revolution (Lockerite)": 1.0,
+  "Red Star": 1.2,
+  "Springs of Revolution": 0.9,
+  "Carnation": -0.55,
+  "Communist Caucus": 0.9,
+  "Liberation": 1.25,
+  "Socialist Majority": -0.75,
+  "Emerge": 0.15,
+  "Libertarian Socialist Caucus": 0.95
+};
+
+Object.entries(cooptationTargets).forEach(([name, value]) => {
+  if (profiles[name]) {
+    Object.assign(profiles[name], {cooptation_threat: value});
+  }
+});
+
+const resultMeta = {
+  "Bread & Roses": {
+    site: "https://breadandrosesdsa.org/",
+    logo: "https://breadandrosesdsa.org/social/home.jpg",
+    color: "#e03030",
+    alt: "Bread & Roses logo"
+  },
+  "Groundwork": {
+    site: "https://www.groundworkdsa.com/",
+    logo: "https://static1.squarespace.com/static/64430ff5db47706856e29122/t/64493af967f96e72cf1d39af/1753927868575/7.png?format=1500w",
+    color: "#009070",
+    alt: "Groundwork logo"
+  },
+  "Reform & Revolution": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Reform & Revolution (Millnerite)": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Reform & Revolution (Lockerite)": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Red Star": {
+    site: "https://redstarcaucus.org/",
+    logo: "https://redstarcaucus.org/content/images/2025/10/logo-2.png",
+    color: "#f05050",
+    alt: "Red Star logo"
+  },
+  "Springs of Revolution": {
+    site: "https://sordsa.org/",
+    logo: "https://sordsa.org/img/darkSoR.png",
+    color: "#500020",
+    alt: "Springs of Revolution logo"
+  },
+  "Carnation": {
+    site: "https://sites.google.com/view/carnation-program/home",
+    logo: "https://ssl.gstatic.com/atari/images/public/favicon.ico",
+    color: "#3050b0",
+    alt: "Carnation logo"
+  },
+  "Communist Caucus": {
+    site: "https://communistcaucus.com/",
+    logo: "https://communistcaucus.com/wp-content/uploads/2020/02/1500x500.jpeg",
+    color: "#200010",
+    alt: "Communist Caucus logo"
+  },
+  "Liberation": {
+    site: "https://www.liberationcaucus.org/",
+    logo: "https://www.liberationcaucus.org/content/images/2025/03/DSA_LIBERATION_CACAUS-1.png",
+    color: "#d02020",
+    alt: "Liberation logo"
+  },
+  "Socialist Majority": {
+    site: "https://www.socialistmajority.com/",
+    logo: "https://images.squarespace-cdn.com/content/v1/5e8a24b0cbe1c339cd05b7df/04902469-4422-4c01-9687-3920eea0ef16/logo_smc-arch_red-transparent.png?format=1500w",
+    color: "#e04040",
+    alt: "Socialist Majority logo"
+  },
+  "Emerge": {
+    site: "https://dsaemerge.org/",
+    logo: "https://dsaemerge.org/wp-content/uploads/2022/04/emerge_logo_ab_revision_fg-xlight-01.png?w=125&h=162",
+    color: "#d05060",
+    alt: "Emerge logo"
+  },
+  "Libertarian Socialist Caucus": {
+    site: "https://dsa-lsc.org/",
+    logo: "https://dsa-lsc.org/content/images/2017/09/lscrose-2.png",
+    color: "#d05060",
+    alt: "Libertarian Socialist Caucus logo"
+  },
+  "Marxist Unity Group": {
+    site: "https://www.marxistunity.com/",
+    logo: "https://static1.squarespace.com/static/600dc9146c455e4aedfc5d6e/t/637d294a9b5e7f5918c3a838/1669146954155/unnamed+%286%29.jpg?format=1500w",
+    color: "#6080f0",
+    alt: "Marxist Unity Group logo"
+  },
+  "Independent DSA Member": {
+    site: "",
+    logo: "",
+    color: "#6b7280",
+    alt: ""
+  }
+};
+
+const resultDescriptions = {
+  "Bread & Roses": "Labor-focused democratic socialist caucus emphasizing class-wide organizing and disciplined strategy.",
+  "Groundwork": "Coalition-oriented caucus focused on practical governance, electoral growth, and broad alignment.",
+  "Marxist Unity Group": "Programmatic Marxist caucus emphasizing political clarity, cadre development, and strategic discipline.",
+  "Reform & Revolution (Millnerite)": "Revolutionary socialist current prioritizing disciplined organization, anti-imperialism, and class independence.",
+  "Reform & Revolution (Lockerite)": "Revolutionary socialist current stressing organization, class struggle, and internationalist politics.",
+  "Red Star": "Marxist-Leninist tendency emphasizing anti-imperialism, organizational cohesion, and militant politics.",
+  "Springs of Revolution": "Movement-centered caucus focused on mass struggle, anti-imperialism, and grassroots pressure.",
+  "Carnation": "Electoral-socialist tendency prioritizing coordinated campaigns and pragmatic legislative gains.",
+  "Communist Caucus": "Communist tendency emphasizing mass organizing, independent politics, and anti-imperialist solidarity.",
+  "Liberation": "Anti-imperialist caucus stressing disciplined organization and solidarity with liberation movements.",
+  "Socialist Majority": "Broad electoral tendency focused on winning office and governing capacity at scale.",
+  "Emerge": "Broad-left tendency emphasizing membership growth, organizing experimentation, and coalition building.",
+  "Libertarian Socialist Caucus": "Libertarian socialist current prioritizing grassroots democracy, broad participation, and movement autonomy.",
+  "Independent DSA Member": "Your answers did not strongly align with one caucus profile, suggesting an independent mix of views."
+};
+
 const options = [
   {label:"Strongly Agree", value:2},
   {label:"Agree", value:1},
@@ -189,6 +419,8 @@ const options = [
 ];
 
 const quizDiv = document.getElementById("quiz");
+const resultsDiv = document.getElementById("results");
+const STORAGE_KEY = "dsa_quiz_responses_v4";
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
@@ -209,7 +441,47 @@ quizDiv.addEventListener("change", (event) => {
   document.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
     radio.closest("label")?.classList.toggle("selected", radio.checked);
   });
+  updateProgress();
+  saveResponses();
 });
+
+function updateProgress() {
+  const {answered} = gatherResponses();
+  const pct = Math.round((answered / questions.length) * 100);
+  document.getElementById("progressText").textContent = `Answered ${answered}/${questions.length} questions (${pct}%).`;
+  document.getElementById("progressFill").style.width = `${pct}%`;
+}
+
+function saveResponses() {
+  const {responses} = gatherResponses();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(responses));
+}
+
+function restoreResponses() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved)) return;
+    saved.forEach((value, i) => {
+      if (value === null || value === undefined) return;
+      const el = document.querySelector(`input[name="q${i}"][value="${value}"]`);
+      if (el) {
+        el.checked = true;
+        el.closest("label")?.classList.add("selected");
+      }
+    });
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function jumpToFirstUnanswered() {
+  const first = questions.findIndex((_, i) => !document.querySelector(`input[name="q${i}"]:checked`));
+  if (first === -1) return;
+  const card = document.querySelectorAll(".question")[first];
+  card?.scrollIntoView({behavior: "smooth", block: "center"});
+}
 
 function gatherResponses() {
   const responses = [];
@@ -315,12 +587,14 @@ function calculateResults() {
     .sort((a,b) => b.pct - a.pct);
 
   const top3 = augmented.slice(0,3);
+  const top3WithMeta = top3.map((x) => ({...x, meta: resultMeta[x.name] || {site: "", logo: "", color: "#6b7280", alt: `${x.name} logo`}, description: resultDescriptions[x.name] || "No description available."}));
 
-  document.getElementById("results").style.display = "block";
-  document.getElementById("results").innerHTML = `
+  resultsDiv.style.display = "block";
+  resultsDiv.innerHTML = `
     <h2>Results</h2>
     <p><strong>Closest match:</strong> ${top3[0].name}</p>
     <p><strong>Also similar to:</strong> ${top3[1].name}, ${top3[2].name}</p>
+    ${top3WithMeta.map(x => `<div class="result-card" style="border-left-color:${x.meta.color || "#6b7280"}"><div class="result-card-head">${x.meta.logo ? `<img class="result-card-logo" src="${x.meta.logo}" alt="${x.meta.alt || `${x.name} logo`}" loading="lazy" onerror="this.style.display='none'">` : ""}<div><strong style="color:${x.meta.color || "#6b7280"}">${x.name}</strong><div>${x.pct.toFixed(1)}%</div>${x.meta.site ? `<a href="${x.meta.site}" target="_blank" rel="noopener noreferrer">${x.meta.site}</a>` : `<span class="small">No official website listed</span>`}<div class="small">${x.description}</div></div></div></div>`).join("")}
     <p class="small">Answered ${answered}/${questions.length} questions. Neutral responses: ${dkCount}.</p>
     <details>
       <summary>Show full score breakdown</summary>
@@ -333,12 +607,14 @@ function calculateResults() {
       ).join("\n")}</pre>
     </details>
   `;
+  resultsDiv.scrollIntoView({behavior: "smooth", block: "start"});
 
   return {
     answered,
     dkCount,
     responses,
     top3,
+    top3WithMeta,
     breakdown: augmented
   };
 }
@@ -357,7 +633,21 @@ function exportResults() {
       response: result.responses[i]
     })),
     top3: result.top3,
-    breakdown: result.breakdown
+    top3WithMeta: result.top3WithMeta.map(item => ({
+      name: item.name,
+      pct: item.pct,
+      logo: item.meta.logo || "",
+      color: item.meta.color || "#6b7280",
+      site: item.meta.site || "",
+      description: item.description || ""
+    })),
+    breakdown: result.breakdown.map(item => ({
+      ...item,
+      logo: (resultMeta[item.name] || {}).logo || "",
+      color: (resultMeta[item.name] || {}).color || "#6b7280",
+      site: (resultMeta[item.name] || {}).site || "",
+      description: resultDescriptions[item.name] || ""
+    }))
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type: "application/json"});
   const a = document.createElement("a");
@@ -370,8 +660,12 @@ function exportResults() {
 function clearAllAnswers() {
   document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
   document.querySelectorAll(".options label.selected").forEach(el => el.classList.remove("selected"));
-  document.getElementById("results").style.display = "none";
+  localStorage.removeItem(STORAGE_KEY);
+  resultsDiv.style.display = "none";
+  updateProgress();
 }
+restoreResponses();
+updateProgress();
 </script>
 </body>
 </html>
