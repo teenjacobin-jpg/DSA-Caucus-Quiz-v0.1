@@ -503,12 +503,12 @@ function buildShareTextForResult(primaryName, primaryHandle) {
   const rows = getShareRowsForResult(primaryName);
   const tweetPool = rows.flatMap(row => row.templates.map(template => ({template, handle: row.handle || ''})));
   const selected = tweetPool.length ? tweetPool[Math.floor(Math.random() * tweetPool.length)] : null;
-  const fallback = `I got ${primaryHandle || primaryName} on this quiz [link]`;
+  const fallback = `I got ${primaryHandle || primaryName} on this quiz`;
   const text = selected ? selected.template : fallback;
-  const withLink = text.includes('[link]') ? text.replaceAll('[link]', QUIZ_URL) : `${text} ${QUIZ_URL}`;
+  const withoutLinkPlaceholder = text.replaceAll('[link]', '').replace(/\s{2,}/g, ' ').trim();
   return {
     mode: selected ? 'row-uniform-template' : 'default-format',
-    shareText: withLink.trim(),
+    shareText: withoutLinkPlaceholder,
     handleUsed: primaryHandle || (selected ? selected.handle : '')
   };
 }
