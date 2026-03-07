@@ -314,6 +314,13 @@ Object.entries(coalitionUnityTargets).forEach(([name, value]) => {
   }
 });
 
+// Calibrate key profile axes based on scoring feedback:
+// - Q10/Q12 (`electoral_bnr`): "Agree" trends toward Groundwork, "Disagree" toward Socialist Majority.
+// - Q34 (`organization_discipline`): "Agree" should also increase Socialist Majority alignment.
+if (profiles["Groundwork"]) profiles["Groundwork"].electoral_bnr = 1.0;
+if (profiles["Socialist Majority"]) profiles["Socialist Majority"].electoral_bnr = -1.0;
+if (profiles["Socialist Majority"]) profiles["Socialist Majority"].organization_discipline = 0.8;
+
 const resultMeta = {
   "Bread & Roses": {
     blurb: "Bread & Roses describes itself as “a national caucus of Marxist organizers in the Democratic Socialists of America” committed to building “an effective DSA rooted in the multiracial working class.” The caucus emphasizes mass politics, rebuilding a militant labor movement, and developing socialist leaders through workplace organizing, elections, and political education. Bread & Roses often argues that socialism will be built through a democratic mass movement capable of defeating the billionaire class and winning reforms like Medicare for All and a Green New Deal.",
@@ -573,6 +580,32 @@ function scoreCaucus(responses, caucusName) {
   };
 }
 
+function applyCarnationBridgeBonus(scored, responses) {
+  const breadAndRoses = scored.find(entry => entry.name === "Bread & Roses");
+  const carnation = scored.find(entry => entry.name === "Carnation");
+  if (!breadAndRoses || !carnation) return;
+
+  const thirdCampAvg = averageForCategory(responses, cats.critique_states || []);
+  const armedResistanceAvg = averageForCategory(responses, cats.armed_resistance || []);
+  if (thirdCampAvg === null || armedResistanceAvg === null) return;
+
+  const mostlyBreadAndRoses = breadAndRoses.pct >= 76;
+  const lowerThirdCampAlignment = thirdCampAvg <= 0.6;
+  const mildlyMoreArmedResistanceSympathy = armedResistanceAvg >= 0.25 && armedResistanceAvg <= 1.5;
+  if (!mostlyBreadAndRoses || !lowerThirdCampAlignment || !mildlyMoreArmedResistanceSympathy) return;
+
+  const bonus = Math.min(
+    4,
+    Math.max(0, (breadAndRoses.pct - 72) * 0.08)
+      + Math.max(0, 0.8 - thirdCampAvg) * 1.8
+      + Math.max(0, armedResistanceAvg - 0.2) * 1.1
+  );
+
+  if (bonus <= 0) return;
+  carnation.pct = Math.min(100, carnation.pct + bonus);
+  carnation.raw = (carnation.pct / 100) * carnation.max;
+}
+
 function calculateIndependent(responses, dkCount, scored) {
   const dkRatio = dkCount / questions.length;
   const top = scored[0] ? scored[0].pct : 0;
@@ -605,7 +638,10 @@ function calculateResults() {
   const scored = Object.keys(profiles).map(name => {
     const s = scoreCaucus(responses, name);
     return {name, pct: s.pct, raw: s.raw, max: s.max, catDetails: s.catDetails};
-  }).sort((a,b) => b.pct - a.pct);
+  });
+
+  applyCarnationBridgeBonus(scored, responses);
+  scored.sort((a,b) => b.pct - a.pct);
 
   const independentPct = calculateIndependent(responses, dkCount, scored);
   const augmented = [...scored, {name: "Independent DSA Member", pct: independentPct, raw: independentPct, max: 100, catDetails: {}}]
