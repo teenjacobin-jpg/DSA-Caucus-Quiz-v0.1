@@ -212,6 +212,30 @@ summary {
   background: #3568cd;
 }
 
+.result-card {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: 10px;
+  background: #f8fbff;
+}
+
+.result-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.result-card-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid var(--border);
+}
+
 </style>
 </head>
 <body>
@@ -234,7 +258,6 @@ should inform your way of assessing the different tendencies in DSA.
     <div id="progressText" class="small">Answered 0/0 questions (0%).</div>
     <div class="progress-bar" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
   </div>
-  <div class="small">GitHub-ready single-file demo. Provisional scoring. More “Don't Know / Don't Care / Neutral” answers move you toward <strong>Independent DSA Member</strong>.</div>
 </div>
 
 <div id="quiz"></div>
@@ -246,6 +269,130 @@ const questions = DATA.questions;
 const profiles = DATA.profiles;
 const cats = DATA.cats;
 const catWeights = DATA.cat_weights;
+
+questions[27] = "Leaders should be chosen through organized debate and collective decision-making, not mainly through mass online voting.";
+questions[44] = "Maintaining trust with Palestinian-led and anti-Zionist movement groups is more important than winning elections.";
+questions[54] = "Socialists should support liberation struggles even when they disagree with the politics of the groups leading them.";
+questions.push("Co-optation is a greater threat to our movement than marginalization.");
+
+cats.cooptation_threat = [questions.length - 1];
+catWeights.cooptation_threat = 1.05;
+
+const cooptationTargets = {
+  "Bread & Roses": 0.35,
+  "Groundwork": -0.6,
+  "Marxist Unity Group": 1.15,
+  "Reform & Revolution": 0.95,
+  "Reform & Revolution (Millnerite)": 1.0,
+  "Reform & Revolution (Lockerite)": 1.0,
+  "Red Star": 1.2,
+  "Springs of Revolution": 0.9,
+  "Carnation": -0.55,
+  "Communist Caucus": 0.9,
+  "Liberation": 1.25,
+  "Socialist Majority": -0.75,
+  "Emerge": 0.15,
+  "Libertarian Socialist Caucus": 0.95
+};
+
+Object.entries(cooptationTargets).forEach(([name, value]) => {
+  if (profiles[name]) {
+    Object.assign(profiles[name], {cooptation_threat: value});
+  }
+});
+
+const resultMeta = {
+  "Bread & Roses": {
+    site: "https://breadandrosesdsa.org/",
+    logo: "https://breadandrosesdsa.org/social/home.jpg",
+    color: "#e03030",
+    alt: "Bread & Roses logo"
+  },
+  "Groundwork": {
+    site: "https://www.groundworkdsa.com/",
+    logo: "https://static1.squarespace.com/static/64430ff5db47706856e29122/t/64493af967f96e72cf1d39af/1753927868575/7.png?format=1500w",
+    color: "#009070",
+    alt: "Groundwork logo"
+  },
+  "Reform & Revolution": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Reform & Revolution (Millnerite)": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Reform & Revolution (Lockerite)": {
+    site: "https://reformandrevolution.org/",
+    logo: "https://i0.wp.com/reformandrevolution.org/wp-content/uploads/2024/12/cropped-cropped-rr-banner-logo-1.jpeg?w=1341&ssl=1",
+    color: "#c02020",
+    alt: "Reform & Revolution logo"
+  },
+  "Red Star": {
+    site: "https://redstarcaucus.org/",
+    logo: "https://redstarcaucus.org/content/images/2025/10/logo-2.png",
+    color: "#f05050",
+    alt: "Red Star logo"
+  },
+  "Springs of Revolution": {
+    site: "https://sordsa.org/",
+    logo: "https://sordsa.org/img/darkSoR.png",
+    color: "#500020",
+    alt: "Springs of Revolution logo"
+  },
+  "Carnation": {
+    site: "https://sites.google.com/view/carnation-program/home",
+    logo: "https://ssl.gstatic.com/atari/images/public/favicon.ico",
+    color: "#3050b0",
+    alt: "Carnation logo"
+  },
+  "Communist Caucus": {
+    site: "https://communistcaucus.com/",
+    logo: "https://communistcaucus.com/wp-content/uploads/2020/02/1500x500.jpeg",
+    color: "#200010",
+    alt: "Communist Caucus logo"
+  },
+  "Liberation": {
+    site: "https://www.liberationcaucus.org/",
+    logo: "https://www.liberationcaucus.org/content/images/2025/03/DSA_LIBERATION_CACAUS-1.png",
+    color: "#d02020",
+    alt: "Liberation logo"
+  },
+  "Socialist Majority": {
+    site: "https://www.socialistmajority.com/",
+    logo: "https://images.squarespace-cdn.com/content/v1/5e8a24b0cbe1c339cd05b7df/04902469-4422-4c01-9687-3920eea0ef16/logo_smc-arch_red-transparent.png?format=1500w",
+    color: "#e04040",
+    alt: "Socialist Majority logo"
+  },
+  "Emerge": {
+    site: "https://dsaemerge.org/",
+    logo: "https://dsaemerge.org/wp-content/uploads/2022/04/emerge_logo_ab_revision_fg-xlight-01.png?w=125&h=162",
+    color: "#d05060",
+    alt: "Emerge logo"
+  },
+  "Libertarian Socialist Caucus": {
+    site: "https://dsa-lsc.org/",
+    logo: "https://dsa-lsc.org/content/images/2017/09/lscrose-2.png",
+    color: "#d05060",
+    alt: "Libertarian Socialist Caucus logo"
+  },
+  "Marxist Unity Group": {
+    site: "https://www.marxistunity.com/",
+    logo: "https://static1.squarespace.com/static/600dc9146c455e4aedfc5d6e/t/637d294a9b5e7f5918c3a838/1669146954155/unnamed+%286%29.jpg?format=1500w",
+    color: "#6080f0",
+    alt: "Marxist Unity Group logo"
+  },
+  "Independent DSA Member": {
+    site: "",
+    logo: "",
+    color: "#6b7280",
+    alt: ""
+  }
+};
 
 const options = [
   {label:"Strongly Agree", value:2},
@@ -426,13 +573,14 @@ function calculateResults() {
     .sort((a,b) => b.pct - a.pct);
 
   const top3 = augmented.slice(0,3);
+  const top3WithMeta = top3.map((x) => ({...x, meta: resultMeta[x.name] || {site: "", logo: "", color: "#6b7280", alt: `${x.name} logo`}}));
 
   resultsDiv.style.display = "block";
   resultsDiv.innerHTML = `
     <h2>Results</h2>
     <p><strong>Closest match:</strong> ${top3[0].name}</p>
     <p><strong>Also similar to:</strong> ${top3[1].name}, ${top3[2].name}</p>
-    <div class="match-list">${top3.map(x => `<div class="match-item"><div class="match-item-head"><strong>${x.name}</strong><span>${x.pct.toFixed(1)}%</span></div><div class="match-item-bar"><span style="width:${x.pct.toFixed(1)}%"></span></div></div>`).join("")}</div>
+    ${top3WithMeta.map(x => `<div class="result-card" style="border-left-color:${x.meta.color || "#6b7280"}"><div class="result-card-head">${x.meta.logo ? `<img class="result-card-logo" src="${x.meta.logo}" alt="${x.meta.alt || `${x.name} logo`}" loading="lazy" onerror="this.style.display='none'">` : ""}<div><strong style="color:${x.meta.color || "#6b7280"}">${x.name}</strong><div>${x.pct.toFixed(1)}%</div>${x.meta.site ? `<a href="${x.meta.site}" target="_blank" rel="noopener noreferrer">${x.meta.site}</a>` : `<span class="small">No official website listed</span>`}</div></div></div>`).join("")}
     <p class="small">Answered ${answered}/${questions.length} questions. Neutral responses: ${dkCount}.</p>
     <details>
       <summary>Show full score breakdown</summary>
@@ -452,6 +600,7 @@ function calculateResults() {
     dkCount,
     responses,
     top3,
+    top3WithMeta,
     breakdown: augmented
   };
 }
@@ -470,7 +619,19 @@ function exportResults() {
       response: result.responses[i]
     })),
     top3: result.top3,
-    breakdown: result.breakdown
+    top3WithMeta: result.top3WithMeta.map(item => ({
+      name: item.name,
+      pct: item.pct,
+      logo: item.meta.logo || "",
+      color: item.meta.color || "#6b7280",
+      site: item.meta.site || ""
+    })),
+    breakdown: result.breakdown.map(item => ({
+      ...item,
+      logo: (resultMeta[item.name] || {}).logo || "",
+      color: (resultMeta[item.name] || {}).color || "#6b7280",
+      site: (resultMeta[item.name] || {}).site || ""
+    }))
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type: "application/json"});
   const a = document.createElement("a");
