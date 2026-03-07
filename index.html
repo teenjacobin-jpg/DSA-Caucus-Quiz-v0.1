@@ -52,7 +52,7 @@ pre { white-space: pre-wrap; word-break: break-word; background: #fff6f6; border
 <div class="disclosure"><strong>Disclosure:</strong> Political tendencies are formed out of shared analysis of shared experience.
 Your results on this quiz should not affect your political identity. Rather, the following questions
 should inform your way of assessing the different tendencies in DSA.</div>
-<p class="small"><strong>Latest update check:</strong> This build includes the Lockerite description refresh, Carnation bridge weighting adjustment, and safe shared-results links that do not expose raw answers.</p>
+<p class="small"><strong>Latest update check:</strong> This build includes the Lockerite description refresh, Carnation bridge weighting adjustment, Communist Caucus electoral-affinity and anti-mutual-aid penalties, and safe shared-results links that do not expose raw answers.</p>
 
 <div id="quiz" class="panel"></div>
 <div id="results" class="panel" style="display:none; margin-top: 12px;"></div>
@@ -476,6 +476,31 @@ function applyCarnationBridgeBonus(scored, responses) {
   const bonus = Math.min(4, Math.max(0, (breadAndRoses.pct - 72) * 0.08) + Math.max(0, 0.8 - thirdCampAvg) * 1.8 + Math.max(0, armedResistanceAvg - 0.2) * 1.1);
   if (bonus <= 0) return; carnation.pct = Math.min(100, carnation.pct + bonus); carnation.raw = (carnation.pct / 100) * carnation.max;
 }
+function applyCommunistElectoralPenalty(scored, responses) {
+  const communist = scored.find(entry => entry.name === "Communist Caucus");
+  if (!communist) return;
+  let totalPenalty = 0;
+
+  const electoralCategories = ["electoral_general", "electoral_bnr", "electoral_carnation", "new_q13_winning_influence"];
+  const electoralAverages = electoralCategories
+    .map((catName) => averageForCategory(responses, cats[catName] || []))
+    .filter((value) => value !== null);
+  if (electoralAverages.length) {
+    const electoralAffinity = electoralAverages.reduce((sum, value) => sum + value, 0) / electoralAverages.length;
+    const positiveElectoralAffinity = Math.max(0, electoralAffinity);
+    totalPenalty += Math.min(14, positiveElectoralAffinity * 4.5);
+  }
+
+  const mutualAidQuestionIndex = 38;
+  const mutualAidResponse = responses[mutualAidQuestionIndex];
+  if (mutualAidResponse !== null && mutualAidResponse < 0) {
+    totalPenalty += Math.min(8, Math.abs(mutualAidResponse) * 3);
+  }
+
+  if (totalPenalty <= 0) return;
+  communist.pct = Math.max(0, communist.pct - totalPenalty);
+  communist.raw = (communist.pct / 100) * communist.max;
+}
 function calculateIndependent(responses, dkCount, scored) {
   const dkRatio = dkCount / questions.length; const top = scored[0] ? scored[0].pct : 0; const second = scored[1] ? scored[1].pct : 0; const spread = top - second;
   let pct = dkRatio * 130 + Math.max(0, 16 - spread) * 1.8;
@@ -523,7 +548,9 @@ function calculateResults() {
   const breakDSAFlag = [0, 1, 2].includes(responses[hiddenBreakQuestionIndex]);
   if (answered < MIN_REQUIRED) { resultsDiv.style.display = 'block'; resultsDiv.innerHTML = `<h2>Results</h2><p>Please answer at least ${MIN_REQUIRED} of ${questions.length} questions to get a result.</p>`; return null; }
   const scored = Object.keys(profiles).map(name => { const s = scoreCaucus(responses, name); return {name, pct: s.pct, raw: s.raw, max: s.max, catDetails: s.catDetails}; });
-  applyCarnationBridgeBonus(scored, responses); scored.sort((a,b) => b.pct - a.pct);
+  applyCarnationBridgeBonus(scored, responses);
+  applyCommunistElectoralPenalty(scored, responses);
+  scored.sort((a,b) => b.pct - a.pct);
   const independentPct = calculateIndependent(responses, dkCount, scored);
   const augmented = [...scored, {name: "Independent DSA Member", pct: independentPct, raw: independentPct, max: 100, catDetails: {}}].sort((a,b) => b.pct - a.pct);
   const top3 = augmented.slice(0,3);
