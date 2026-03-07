@@ -205,21 +205,158 @@ Object.values(resultMeta).forEach((meta) => {
 });
 
 const shareSpreadsheetRows = {
-  "Bread & Roses": {handle: "@BreadRosesDSA", templates: []},
-  "Red Star": {handle: "@redstarcaucus", templates: []},
-  "Reform & Revolution": {handle: "@reformrevdsa", templates: []},
-  "Groundwork": {handle: "@groundworkdsa", templates: []},
-  "Class Unity": {handle: "@classunitydsa", templates: []},
-  "Afrosocialists": {handle: "@afrosocialists", templates: []},
-  "Socialist Majority": {handle: "@SocialistMaj", templates: []},
-  "Libertarian Socialist Caucus": {handle: "@DSA_LSC", templates: []},
-  "Emerge": {handle: "@emergedsa", templates: []},
-  "Communist Caucus": {handle: "@communistcaucus", templates: []},
-  "Marxist Unity Group": {handle: "@MUG_DSA", templates: []},
-  "Liberation": {handle: "@liberationdsa", templates: []},
-  "Springs of Revolution": {handle: "@SpringsofRev", templates: []},
-  "Carnation": {handle: "@CarnationDSA", templates: []},
-  "Independent DSA Member": {handle: "@DemSocialists", templates: []}
+  "Bread & Roses": {
+    "handle": "@breadrosesDSA",
+    "templates": [
+      "I got @breadrosesDSA on this quiz [link}",
+      "Our task is to build a democratic socialist organization rooted in the multiracial working class, capable of developing leaders, strengthening class struggle, and winning lasting gains. I got Bread & Roses on the TeenJ DSA Caucus Quiz. Join @breadrosesDSA and take this quiz [link]",
+      "🥖🌹🥖🌹🥖🌹\r\ntake the quiz\r\n🥖🌹🥖🌹🥖🌹\r\n[link]",
+      "I am first member of DSA to have a real job. Please join me and my 12 remaining comrades @breadrosesDSA and take this quiz [link]",
+      "Got kicked from Camejo Mansion for baling too hard. Join @breadrosesDSA and take this quiz [link]",
+      "Whatsapp isn't that bad. I got @breadrosesDSA on this quiz and you should too [link]"
+    ]
+  },
+  "Groundwork": {
+    "handle": "@GroundworkDSA",
+    "templates": [
+      "I got @GroundworkDSA on this quiz [link}",
+      "Our task is to turn socialist politics outward, grow beyond subculture, and build a student movement with the scale, seriousness, and clarity needed to shape the future of the left. I got Groundwork on the TeenJ DSA Caucus Quiz. Join @GroundworkDSA and take this quiz [link]",
+      "🪴🪴🪴🪴🪴\r\ntake the quiz\r\n🪴🪴🪴🪴🪴\r\n[link]",
+      "I just hit an #ultra with my Tesla. Join @GroundworkDSA and take this quiz [link]",
+      "If Chi Osse were alive today, he would be my friend on Signal and join @GroundworkDSA. [link]",
+      "I fully support everything Nate has ever done. Take this quiz NOW [link]"
+    ]
+  },
+  "Carnation Program": {
+    "handle": "@CarnationDSA",
+    "templates": [
+      "I got @CarnationDSA on this quiz [link}",
+      "Our task is to approach socialist organization with seriousness, discipline, and strategic clarity, so that our politics can be equal to the scale of the crises we face. I got Carnation Program on the TeenJ DSA Caucus Quiz. Join @CarnationDSA and take this quiz [link]",
+      "Abdullah Farooq is very handsome. Join @CarnationDSA and take this quiz [link]",
+      "“Medicine is the keystone of the arch of socialism.”\n-Vladimir Lenin (supposedly) Join @CarnationDSA and take this quiz [link]",
+      "The @CarnationDSA Program call for:\r\nMedicare for All\r\nBring Down The Cost of Living\r\nEnd Political Corruption\r\nUnions for All\r\nEnd US Militarism\r\nAnd for YOU to take this quiz [link]"
+    ]
+  },
+  "Reform & Revolution (Milnerite)": {
+    "handle": "@dsaRandR",
+    "templates": [
+      "I got @dsaRandR on this quiz [link}",
+      "Our task is to connect today’s organizing to a larger strategy for building socialist power, treating theory, political independence, and organization as essential rather than optional. I got Reform & Revolution on the TeenJ DSA Caucus Quiz. Join @dsaRandR and take this quiz [link]",
+      "🔱🔱🔱🔱🔱\r\ntake the quiz\r\n🔱🔱🔱🔱🔱\r\n[link]",
+      "Am I Transgender? I just got @dsaRandR on the TeenJ DSA Caucus Quiz [link]",
+      "we CAN be trusted. Join @dsaRandR and take this quiz [link]",
+      "I am a big fan of @dsaRandR but the new logo is AWFUL. Take this quiz [link]"
+    ]
+  },
+  "Reform & Revolution (Lockerite)": {
+    "handle": "@dsaRandR",
+    "templates": [
+      "I got @dsaRandR on this quiz [link}",
+      "Our task is to build the kind of socialist organization that can link immediate struggles to a long-term strategy for party-building, class power, and transformation. I got Reform & Revolution on the TeenJ DSA Caucus Quiz. Join @dsaRandR and take this quiz [link]",
+      "🚩🔧🚩🔧🚩🔧\r\ntake the quiz\r\n🚩🔧🚩🔧🚩🔧\r\n[link]",
+      "MY STUDENTS ARE ALL MORONS! Join @dsaRandR and take this quiz [link]",
+      "I got @dsaRandR (Lockerite) on this quiz and now a Teenager with an affinty for stimulants is chasing after me with a hammer [link]",
+      "I am a big fan of @dsaRandR but the new logo is AWFUL. Take this quiz [link]"
+    ]
+  },
+  "Marxist Unity Group": {
+    "handle": "@MarxistUnityDSA",
+    "templates": [
+      "I got @MarxistUnityDSA on this quiz [link}",
+      "Our task is to forge a more coherent socialist organization with the programmatic clarity, democratic discipline, and political independence needed to act effectively as a national force. I got Marxist Unity Group on the TeenJ DSA Caucus Quiz. Join @MarxistUnityDSA and take this quiz [link]",
+      "🍻🍻🍻🍻🍻\r\ntake the quiz\r\n🍻🍻🍻🍻🍻\r\n[link]",
+      "If Karl Kautsky were alive today, he would be my friend on Facebook and join @MarxistUnityDSA. [link]",
+      "Donald Parkinson sounds exactly like the comicbook store guy from the Simpson but he has many interesting persepctives. Join @MarxistUnityDSA and take this quiz [link]",
+      "\"Fuck the constitution\" - @MarxistUnityDSA. Take this quiz [link]"
+    ]
+  },
+  "Springs of Revolution": {
+    "handle": "@SOR4DSA",
+    "templates": [
+      "I got @SOR4DSA on this quiz [link}",
+      "Our task is to build a socialist politics equal to this moment, rooted in struggle against imperialism, oppression, and war, while helping develop the mass movements that can change society. I got Springs of Revolution on the TeenJ DSA Caucus Quiz. Join @SOR4DSA and take this quiz [link]",
+      "It took me forever but I FINALLY got @SOR4DSA on this quiz [link]",
+      "FROM THE RIVER TO THE SEA, pls come take this quiz with me :) [link]"
+    ]
+  },
+  "Red Star Caucus": {
+    "handle": "@RedStarCaucus",
+    "templates": [
+      "I got @RedStarCaucus on this quiz [link}",
+      "Our task is to rebuild a socialist politics grounded in class struggle, anti-imperialism, and serious engagement with the lessons of international communist history. I got Red Star on the TeenJ DSA Caucus Quiz. Join @RedStarCaucus and take this quiz [link]",
+      "🌟🌟🌟🌟🌟\r\ntake the quiz\r\n🌟🌟🌟🌟🌟\r\n[link]",
+      "邓小平有许多好主意。加入@RedStarCaucus，参加这个测验。[link]"
+    ]
+  },
+  "Liberation Caucus": {
+    "handle": "@LiberationCaucus",
+    "templates": [
+      "I got @LiberationCaucus on this quiz [link}",
+      "Our task is to build disciplined socialist leadership, deepen political education, and strengthen organization for the struggles against capitalism, imperialism, and oppression. I got Liberation on the TeenJ DSA Caucus Quiz. Join @dsaliberation and take this quiz [link]",
+      "⛓️‍💥⛓️‍💥⛓️‍💥⛓️‍💥⛓️‍💥\ntake the quiz\n⛓️‍💥⛓️‍💥⛓️‍💥⛓️‍💥⛓️‍💥\n[link]",
+      "KILL ALL WHITE PEOPLE!!! and take this quiz [link]",
+      "J, Sakai was Japanese btw. Join @LiberationCaucus and take this quiz to learn more [link]"
+    ]
+  },
+  "Socialist Majority": {
+    "handle": "@DSASocMaj",
+    "templates": [
+      "I got @DSASocMaj on this quiz [link}",
+      "Our task is to build a broad socialist majority capable of winning reforms, expanding our base, and bringing more people into durable political struggle. I got Socialist Majority on the TeenJ DSA Caucus Quiz. Join @DSASocMaj and take this quiz [link]",
+      "✨✨✨✨✨\r\ntake the quiz\r\n✨✨✨✨✨\r\n[link]",
+      "If you critcize Zohran I will kill myself. Join @DSASocMaj and take this quiz [link]",
+      "If David Duhalde were alive today, he would be my friend and join @DSASocMaj. [link]",
+      "I have been directed by very small groupchat in a very large groupchat (@DSASocMaj) to take this quiz [link]"
+    ]
+  },
+  "Emerge": {
+    "handle": "@dsaemerge",
+    "templates": [
+      "I got @dsaemerge on this quiz [link}",
+      "Our task is to connect electoral work to deeper organization, helping turn campaigns into lasting structures of working-class power and political development. I got Emerge on the TeenJ DSA Caucus Quiz. Join @dsaemerge and take this quiz [link]",
+      "🌸🌸🌸🌸🌸\r\ntake the quiz\r\n🌸🌸🌸🌸🌸\r\n[link]",
+      "It took me FOREVER but I FINALLY got @dsaemerge on this quiz [link]",
+      "Gustavo is chasing after me on all fours like Sabertooth from X-Men Origins: Wolverine because i got @dsaemerge on this quiz [link]",
+      "Gustavo cut my #PublicGoods because i got @dsaemerge on this quiz [link]"
+    ]
+  },
+  "Libertarian Socialist Caucus": {
+    "handle": "@DSA_LSC",
+    "templates": [
+      "I got @DSA_LSC on this quiz [link}",
+      "Our task is to build a socialism rooted in direct democracy, self-organization, and collective freedom, so that ordinary people can govern their own lives and communities. I got Libertarian Socialist Caucus on the TeenJ DSA Caucus Quiz. Join @DSA_LSC and take this quiz [link]",
+      "🏴🏴🏴🏴🏴\r\ntake the quiz\r\n🏴🏴🏴🏴🏴\r\n[link]",
+      "If Aaron Warner were alive today, he wouldn't say that. Join @DSA_LSC and take this quiz [link]",
+      "Horizon was a very good idea. Please take this quiz [link]"
+    ]
+  },
+  "Communist Caucus": {
+    "handle": "@DSACommunists",
+    "templates": [
+      "I got @DSACommunists on this quiz [link}",
+      "Our task is to build a base for communist politics in working-class communities, rooted in durable organization and collective struggle. I got Communist Caucus on the TeenJ DSA Caucus Quiz. Join @DSACommunists and take this quiz [link]",
+      "♠️♠️♠️♠️♠️\r\ntake the quiz\r\n♠️♠️♠️♠️♠️\r\n[link]",
+      "I'm on rent strike and it's NOT just because I'm unemployed. Join @[handle] and take this quiz [link]",
+      "I got @DSACommunists because the logo reminded me of Motörhead. Find out your DSA caucus with this quiz [link]"
+    ]
+  },
+  "Independent DSA Member": {
+    "handle": "@demsocialists",
+    "templates": [
+      "I got @demsocialists on this quiz [link}",
+      "Our task is to build socialism through organizing, political growth, and collective struggle, even if we do not see ourselves reflected fully in any one caucus tradition. I got Independent DSA Member on the TeenJ DSA Caucus Quiz. Join @demsocialists and take this quiz [link]",
+      "🌹🌹🌹🌹🌹\r\ntake the quiz\r\n🌹🌹🌹🌹🌹\r\n[link]",
+      "I took this quiz and it said I was normal :)   You should take it too [link]",
+      "I'm normal and don't care [link]"
+    ]
+  }
+};
+
+const shareSpreadsheetAliases = {
+  "Carnation": "Carnation Program",
+  "Red Star": "Red Star Caucus",
+  "Liberation": "Liberation Caucus",
+  "Reform & Revolution": ["Reform & Revolution (Milnerite)", "Reform & Revolution (Lockerite)"]
 };
 
 const options = [
@@ -347,22 +484,33 @@ function calculateIndependent(responses, dkCount, scored) {
   return Math.min(100, pct);
 }
 
-function sanitizeTemplate(template) {
-  const blocked = /(kill|murder|lynch|suicide|self-harm|kike|fag|tranny|nigger|raghead|spic|chink|gas\s+the|genocide\s+all|go\s+die|hang\s+all)/i;
-  return !blocked.test(template || '');
+function getShareRowsForResult(resultName) {
+  const alias = shareSpreadsheetAliases[resultName];
+  const aliasList = Array.isArray(alias) ? alias : (alias ? [alias] : []);
+  const names = [resultName, ...aliasList];
+  const rows = [];
+  names.forEach((name) => {
+    const row = shareSpreadsheetRows[name];
+    if (!row) return;
+    const templates = Array.isArray(row.templates)
+      ? row.templates.map(t => (typeof t === 'string' ? t.trim() : '')).filter(Boolean)
+      : [];
+    if (templates.length) rows.push({handle: row.handle || '', templates});
+  });
+  return rows;
 }
-function getShareRow(resultName) { const row = shareSpreadsheetRows[resultName] || {handle: '', templates: []}; return {handle: row.handle || '', templates: (row.templates || []).filter(sanitizeTemplate)}; }
 function buildShareTextForResult(primaryName, primaryHandle) {
-  const rand = Math.random(); const names = Object.keys(shareSpreadsheetRows).filter(n => n !== primaryName);
-  let mode = 'default-format'; let rowName = primaryName;
-  if (rand >= 0.99 && names.length) { mode = 'different-row-spreadsheet-template'; rowName = names[Math.floor(Math.random() * names.length)]; }
-  else if (rand >= 0.66) { mode = 'same-row-spreadsheet-template'; }
-  const row = getShareRow(rowName);
-  let text = `I got ${primaryHandle || primaryName} on this quiz [link]`;
-  if (mode !== 'default-format' && row.templates.length) text = row.templates[Math.floor(Math.random() * row.templates.length)];
-  if (mode !== 'default-format' && !row.templates.length) mode = 'default-format';
+  const rows = getShareRowsForResult(primaryName);
+  const tweetPool = rows.flatMap(row => row.templates.map(template => ({template, handle: row.handle || ''})));
+  const selected = tweetPool.length ? tweetPool[Math.floor(Math.random() * tweetPool.length)] : null;
+  const fallback = `I got ${primaryHandle || primaryName} on this quiz [link]`;
+  const text = selected ? selected.template : fallback;
   const withLink = text.includes('[link]') ? text.replaceAll('[link]', QUIZ_URL) : `${text} ${QUIZ_URL}`;
-  return {mode, shareText: withLink.trim(), handleUsed: primaryHandle || row.handle || ''};
+  return {
+    mode: selected ? 'row-uniform-template' : 'default-format',
+    shareText: withLink.trim(),
+    handleUsed: primaryHandle || (selected ? selected.handle : '')
+  };
 }
 function buildWhySignals(topResult) {
   return Object.entries(topResult.catDetails || {}).map(([name, v]) => ({name, strength: (4 - Math.abs(v.avg - v.target)) * (v.weight || 1), avg: v.avg, target: v.target}))
@@ -381,8 +529,8 @@ function calculateResults() {
   const top3 = augmented.slice(0,3);
   const top3WithMeta = top3.map(x => ({...x, meta: resultMeta[x.name] || {blurb: "No description available.", site: "", logo: "", color: "#6b7280", alt: `${x.name} logo`}}));
   const primaryResultName = breakDSAFlag ? HIDDEN_BREAK_RESULT : top3[0].name;
-  const row = getShareRow(primaryResultName);
-  const handle = row.handle || `@${primaryResultName.replace(/[^a-z0-9]/gi,'')}`;
+  const shareRows = getShareRowsForResult(primaryResultName);
+  const handle = (shareRows[0] && shareRows[0].handle) || `@${primaryResultName.replace(/[^a-z0-9]/gi,'')}`;
   latestShareData = buildShareTextForResult(primaryResultName, handle);
   const whySignals = buildWhySignals(top3[0]);
 
