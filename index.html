@@ -370,6 +370,8 @@ const options = [
 const STORAGE_KEY = "dsa_quiz_progress_v5";
 const MIN_REQUIRED = Math.ceil(questions.length * 0.6);
 const QUIZ_URL = window.location.origin ? window.location.href.split('?')[0] : "https://example.com/dsa-caucus-quiz/";
+const TWITTER_MAX_LENGTH = 280;
+const TWITTER_LINK_LENGTH = 23;
 const sections = Array.isArray(DATA.sections) ? DATA.sections : [];
 
 const quizDiv = document.getElementById("quiz");
@@ -531,11 +533,20 @@ function buildShareTextForResult(primaryName, primaryHandle) {
   const fallback = `I got ${primaryHandle || primaryName} on this quiz`;
   const text = selected ? selected.template : fallback;
   const withoutLinkPlaceholder = text.replaceAll('[link]', '').replace(/\s{2,}/g, ' ').trim();
+  const shortened = shortenTweetForLink(withoutLinkPlaceholder);
   return {
     mode: selected ? 'row-uniform-template' : 'default-format',
-    shareText: withoutLinkPlaceholder,
+    shareText: shortened,
     handleUsed: primaryHandle || (selected ? selected.handle : '')
   };
+}
+
+function shortenTweetForLink(text) {
+  const availableLength = TWITTER_MAX_LENGTH - TWITTER_LINK_LENGTH - 1;
+  const chars = Array.from(text || '');
+  if (chars.length <= availableLength) return text;
+  if (availableLength <= 1) return '…';
+  return `${chars.slice(0, availableLength - 1).join('')}…`;
 }
 function buildWhySignals(topResult) {
   return Object.entries(topResult.catDetails || {}).map(([name, v]) => ({name, strength: (4 - Math.abs(v.avg - v.target)) * (v.weight || 1), avg: v.avg, target: v.target}))
