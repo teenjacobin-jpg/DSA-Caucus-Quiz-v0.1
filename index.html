@@ -432,6 +432,8 @@ const options = [
 const quizDiv = document.getElementById("quiz");
 const resultsDiv = document.getElementById("results");
 const STORAGE_KEY = "dsa_quiz_responses_v4";
+const SHARED_RESULTS_PARAM = "sharedResults";
+const SHARE_VERSION = 1;
 const MIN_REQUIRED = Math.ceil(questions.length * 0.6);
 const seeResultsBtn = document.getElementById("seeResultsBtn");
 const progressBarEl = document.querySelector(".progress-bar");
@@ -687,13 +689,31 @@ function buildShareText(result) {
   const top = result.top3?.[0];
   const runnersUp = result.top3?.slice(1).map((item) => item.name).join(", ") || "N/A";
   const scoreLine = result.top3?.map((item) => `${item.name}: ${item.pct.toFixed(1)}%`).join(" | ") || "";
+  const shareUrl = buildSafeShareUrl(result);
   return [
     `I got ${top?.name || "a result"} on the DSA Tendency Quiz Demo (${top?.pct?.toFixed(1) || "0.0"}%).`,
     `Also similar to: ${runnersUp}.`,
     `Answered ${result.answered}/${questions.length} questions (${result.dkCount} neutral).`,
     scoreLine,
-    window.location.href
+    shareUrl
   ].filter(Boolean).join("\n");
+}
+
+function buildSafeShareUrl(result) {
+  const safePayload = {
+    version: SHARE_VERSION,
+    answered: result.answered,
+    neutralCount: result.dkCount,
+    top3: (result.top3 || []).map((item) => ({
+      name: item.name,
+      pct: Number(item.pct.toFixed(1))
+    }))
+  };
+
+  const encoded = btoa(encodeURIComponent(JSON.stringify(safePayload)));
+  const url = new URL(window.location.href);
+  url.searchParams.set(SHARED_RESULTS_PARAM, encoded);
+  return url.toString();
 }
 
 async function shareResults() {
@@ -707,10 +727,11 @@ async function shareResults() {
   }
 
   const text = buildShareText(result);
+  const shareUrl = buildSafeShareUrl(result);
   const sharePayload = {
     title: "My DSA Tendency Quiz Results",
     text,
-    url: window.location.href
+    url: shareUrl
   };
 
   try {
